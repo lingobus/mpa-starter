@@ -1,0 +1,21 @@
+extends ./_base
+
+block meta
+  +favicon()
+  +analytics()
+  +meta-seo()
+  if useLs
+    if isdev
+      include ./_seed
+    else
+      include ./_seed-min
+
+//- block libcss
+
+block css
+  link(rel="stylesheet" href="/static/css/index.css")
+
+block main
+  #root
+block js
+    script(src="/static/js/index.js")
