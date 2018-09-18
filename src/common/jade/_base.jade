@@ -7,10 +7,13 @@ block vars
   -var bodyClass=""
   -var htmlClass=""
 
-html(class="#{htmlClass}")
+html(class="#{htmlClass} #{locals.locale}")
   head
     meta(content="charset=utf-8")
     block meta
+    script.
+      window.$LB = window.$LB || {}
+      $LB.locale = "#{locals.locale}"
     block script
     block title
       title #{websiteTitle}

@@ -1,3 +1,4 @@
+import isEmpty from 'lodash/isEmpty'
 export default function parseQuery (query) {
   var res = {};
 
@@ -23,5 +24,27 @@ export default function parseQuery (query) {
     }
   });
 
+  return res
+}
+
+/**
+ * 将对象字面量 转换为&连接的查询字符串
+ * @param {*} obj
+ */
+export function encodeQuery(obj) {
+  if (isEmpty(obj)) return ''
+  let res = ''
+  for (let key in obj) {
+    let k = encodeURIComponent(key.trim()), val
+    let _val = obj[key]
+    if (obj[key] === undefined || _val === null) {
+      val = ''
+    } else {
+      val = encodeURIComponent(_val.toString().trim())
+    }
+    res += `${k}=${val}&`
+  }
+  //去除最后的&
+  res = res.slice(0, -1)
   return res
 }

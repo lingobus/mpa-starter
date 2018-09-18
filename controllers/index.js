@@ -1,23 +1,28 @@
-require('colors')
-const glob = require('glob')
-const $path = require('path')
 var router = require('express').Router()
 
-router.get('/', function (req, res) {
-  res.render('index')
-})
+function applyRouter(app) {
+  router.get('/', function (req, res) {
+    res.render('index')
+  })
 
-glob.glob($path.join(__dirname, './*.controller.js'), function (err, files) {
-  if (err) {
-    console.error('Load controlelrs failed!'.red.bold)
-  } else {
-    files.forEach(function (file) {
-      console.log(('Loading controller from ' + file).green.bold)
-      const fn = require(file)
-      fn(router)
-    })
-  }
-})
+  router.get('/mobile-layout', function (req, res) {
+    res.render('mobile-layout')
+  })
 
+  router.get('/lazyload', function (req, res) {
+    res.render('lazyload')
+  })
 
-module.exports = router
+  router.get('/login', function (req, res) {
+    res.render('login')
+  })
+
+  router.get('/register', function (req, res) {
+    res.render('register')
+  })
+
+  app.use(require('./i18n'))
+  app.use(router)
+}
+
+module.exports = applyRouter

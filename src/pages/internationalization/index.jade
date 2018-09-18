@@ -1,0 +1,36 @@
+extends ./_base
+
+block meta
+  +favicon()
+  +analytics()
+  +meta-seo()
+  if useLs
+    if isdev
+      include ./_seed
+    else
+      include ./_seed-min
+
+//- block libcss
+
+block css
+  +element-ui-css()
+  link(rel="stylesheet" href="/static/css/internationalization.css")
+
+mixin content ()
+  -
+    var messages = {
+      'en-US': {
+        title: 'A MPA Vue.js Project'
+      },
+      'zh-CN': {
+        title: '多页面Vue.js工程'
+      }
+    }[locals.locale]
+  center
+    h1 #{messages.title}
+    component-i18n
+block main
+  #root
+    +content()
+block js
+    script(src="/static/js/internationalization.js")

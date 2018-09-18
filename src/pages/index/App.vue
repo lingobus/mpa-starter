@@ -1,16 +1,14 @@
 <template lang="jade">
-  .main
-    .root-container.clear-fix
-      p
-        center
-          h1 A MPA Vue.js Project
-          router-view
-
+  center.main
+    h1 A MPA Vue.js Project
+    router-view
 </template>
+
 <style lang="stylus">
-p
-  margin: 5em auto
+  .main
+    padding: 100px
 </style>
+
 <script>
   export default {
     name: 'app',

@@ -1,3 +1,9 @@
+mixin element-ui-css()
+  if isdev
+    link(rel="stylesheet" href="/static/css/lib/element-ui-lingobus-theme.css?v=pc1")
+  else
+    link(rel="stylesheet" href="/static/css/lib/element-ui-lingobus-theme.min.css?v=pc1")
+
 mixin favicon()
   link(rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-icon")
 

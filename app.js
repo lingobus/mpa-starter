@@ -59,7 +59,7 @@ app.use('/static', express.static(staticPath))
 /* middleware */
 require('./middlewares')(app)
 /* controllers */
-app.use(require('./controllers'))
+require('./controllers')(app)
 
 /* 404 */
 app.use(function(req, res) {

@@ -1,5 +1,5 @@
 <template lang="jade">
-  h1 Hello Vue.js!
+  p Hello Vue.js!
 </template>
 
 <script>
@@ -13,6 +13,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-  h1
+  p
     font-size: 64px
 </style>
