@@ -17,24 +17,26 @@ function assetsPath(filepath) {
   return path.posix.join(dir, filepath)
 }
 
+const supportLangs = [
+  'en-us',
+  'zh-cn',
+]
+
 function getEntries(extensions, options) {
   const res = {}
   options = options || {}
   const verbose = options.verbose || true
   const srcPath = config.paths.src
   const pagesDir = srcPath + '/pages'
-  const includes = options.includes ? options.includes.split(',') : null
-  const excludes = options.excludes ? options.excludes.split(',') : null
   extensions.forEach(ext => {
-    const files = glob.sync(pagesDir + "/*/index" + ext, options)
+    let files = glob.sync(pagesDir + "/*/index" + ext, options) // for example: page/home/index.js
+    supportLangs.forEach(lang => {
+      files = files.concat(glob.sync(pagesDir + "/*/" + lang + "/index" + ext, options)) // for example: page/home/en-us/index.js
+    })
     files.forEach(function(filepath) {
-      const key = path.relative(pagesDir, filepath.substring(0, filepath.lastIndexOf('/')))
-      if (includes) {
-        if (includes.indexOf(key) < 0) return
-      } else if (excludes) {
-        if (excludes.indexOf(key) >= 0) return
-      }
-      res[(options.relativePublicPath || '') + key] = filepath
+      // key for example: home/index
+      const key = (options.relativePublicPath || '') + path.relative(pagesDir, filepath.substring(0, filepath.lastIndexOf('.')))
+      res[key] = filepath
     })
   })
 
@@ -57,30 +59,31 @@ exports.getJadeEntries = function(extensions, options) {
   options = options || {}
   const verbose = options.verbose || true
   const srcPath = config.paths.src
-  const dirs = [
-    {
-      src: srcPath + '/common/jade',
-      relative: srcPath + '/common/jade',
-    },
-    {
-      src: srcPath + '/common/compound-utils',
-      relative: srcPath + '/common',
-    },
+  const pagesDir = srcPath + '/pages'
 
-  ]
-  const includes = options.includes ? options.includes.split(',') : null
-  const excludes = options.excludes ? options.excludes.split(',') : null
+  // jade of page
   extensions.forEach(ext => {
-    dirs.forEach(item => {
-      const files = glob.sync(item.src + "/**/*" + ext, options)
+    let files = glob.sync(pagesDir + "/*/index" + ext, options) // for example: page/home/index.jade
+    supportLangs.forEach(lang => {
+      files = files.concat(glob.sync(pagesDir + "/*/" + lang + "/index" + ext, options)) // for example: page/home/en-us/index.jade
+    })
+    files.forEach(function(filepath) {
+      const key = path.relative(srcPath, filepath.substring(0, filepath.lastIndexOf('.')))
+      res[(options.relativePublicPath || '') + key] = filepath
+    })
+  })
+
+  // jade of common
+  const utilsDirs = [
+    srcPath + '/common/jade',
+    srcPath + '/common/compound-utils'
+  ]
+  extensions.forEach(ext => {
+    utilsDirs.forEach(dir => {
+      const files = glob.sync(dir + "/**/*" + ext, options)
       files.forEach(function(filepath) {
-        let key = path.relative(item.relative, filepath)
+        let key = path.relative(srcPath, filepath)
         key = key.replace(ext, '')
-        if (includes) {
-          if (includes.indexOf(key) < 0) return
-        } else if (excludes) {
-          if (excludes.indexOf(key) >= 0) return
-        }
         res[key] = filepath
       })
     })
@@ -97,7 +100,7 @@ exports.getJadeEntries = function(extensions, options) {
     console.error('!!!Got no entry for ' + extensionsString + '!!!')
   }
 
-  return Object.assign({}, getEntries(extensions, options), res)
+  return res
 }
 
 const ImageNames = {

@@ -11,7 +11,7 @@ const singleTemplatePages = [
 singleTemplatePages.forEach(page => {
   function renderPage (res, page, locale) {
     res.locals.locale = formatLocale(locale)
-    res.render(page)
+    res.render(page + '/index')
   }
 
   // 路径中有locale以路径为准
@@ -33,7 +33,7 @@ const multiTemplatePages = [
 multiTemplatePages.forEach(page => {
   function renderPage (res, page, locale) {
     res.locals.locale = formatLocale(locale)
-    res.render(page + '-' + locale)
+    res.render(page + '/' + locale.toLowerCase() + '/index')
   }
 
   // 路径中有locale以路径为准

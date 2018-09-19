@@ -2,7 +2,7 @@ var router = require('express').Router()
 
 function applyRouter(app) {
   router.get('/', function (req, res) {
-    res.render('index')
+    res.render('index/index')
   })
 
   router.get('/mobile-layout', function (req, res) {

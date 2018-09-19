@@ -1,4 +1,4 @@
-extends ./_base
+extends ../../common/jade/_base
 
 block meta
   +favicon()
@@ -6,16 +6,16 @@ block meta
   +meta-seo()
   if useLs
     if isdev
-      include ./_seed
+      include ../../common/jade/_seed
     else
-      include ./_seed-min
+      include ../../common/jade/_seed-min
 
 //- block libcss
 
 block css
-  link(rel="stylesheet" href="/static/css/index.css")
+  link(rel="stylesheet" href="/static/css/index/index.css")
 
 block main
   #root
 block js
-    script(src="/static/js/index.js")
+    script(src="/static/js/index/index.js")

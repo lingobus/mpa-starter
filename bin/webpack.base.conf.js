@@ -37,8 +37,6 @@ configs.push({
   },
   entry: utils.getEntries(['.js'], {
     relativePublicPath: 'js/',
-    includes: process.env.WEBPACKINCLUDES,
-    excludes: process.env.WEBPACKEXCLUDES
   }),
   resolve: {
     extensions: ['.js'],
@@ -89,7 +87,7 @@ configs.push({
   context: config.paths.root,
   entry: utils.getJadeEntries(['.jade']),
   output: {
-    path: path.resolve(config.paths.root, 'views/'),
+    path: config.paths.views,
     filename: '[name].jade',
     publicPath: config[env].assetsPublicPath
   },

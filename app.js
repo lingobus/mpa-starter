@@ -17,7 +17,7 @@ console.log('Using Node %s'.green.bold, process.version)
 console.log(('Static Directory set to:\n  '.magenta.bold + staticPath).green)
 
 var app = express()
-app.set('views', config.paths.views)
+app.set('views', config.paths.views + '/pages')
 app.set('view engine', 'jade')
 
 if (env === 'dev') {
@@ -64,13 +64,13 @@ require('./controllers')(app)
 /* 404 */
 app.use(function(req, res) {
   res.status(404);
-  res.render('404')
+  res.render('404/index')
 })
 
 /* 500 */
 app.use(function(error, req, res, next) {
   res.status(500);
-  res.render('500', {
+  res.render('500/index', {
     error: error
   })
 })

@@ -1,4 +1,4 @@
-extends ./_base
+extends ../../common/jade/_base
 
 block meta
   +favicon()
@@ -6,15 +6,15 @@ block meta
   +meta-seo()
   if useLs
     if isdev
-      include ./_seed
+      include ../../common/jade/_seed
     else
-      include ./_seed-min
+      include ../../common/jade/_seed-min
 
 //- block libcss
 
 block css
   +element-ui-css()
-  link(rel="stylesheet" href="/static/css/internationalization.css")
+  link(rel="stylesheet" href="/static/css/internationalization/index.css")
 
 mixin content ()
   -
@@ -33,4 +33,4 @@ block main
   #root
     +content()
 block js
-    script(src="/static/js/internationalization.js")
+    script(src="/static/js/internationalization/index.js")
