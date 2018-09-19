@@ -2,18 +2,18 @@
 //- need vue,vuex,vue-router,vue-i18n, axios and moment
 include _global-vars
 include _global-mixins
+include compound-utils/i18n/_i18n-helper
+
 doctype html
 block vars
   -var bodyClass=""
   -var htmlClass=""
 
-html(class="#{htmlClass} #{locals.locale}")
+html(class="#{htmlClass}")
   head
     meta(content="charset=utf-8")
     block meta
-    script.
-      window.$LB = window.$LB || {}
-      $LB.locale = "#{locals.locale}"
+    +i18nInit()
     block script
     block title
       title #{websiteTitle}

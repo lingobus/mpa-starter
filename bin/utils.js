@@ -57,20 +57,32 @@ exports.getJadeEntries = function(extensions, options) {
   options = options || {}
   const verbose = options.verbose || true
   const srcPath = config.paths.src
-  const jadeDir = srcPath + '/common/jade'
+  const dirs = [
+    {
+      src: srcPath + '/common/jade',
+      relative: srcPath + '/common/jade',
+    },
+    {
+      src: srcPath + '/common/compound-utils',
+      relative: srcPath + '/common',
+    },
+
+  ]
   const includes = options.includes ? options.includes.split(',') : null
   const excludes = options.excludes ? options.excludes.split(',') : null
   extensions.forEach(ext => {
-    const files = glob.sync(jadeDir + "/**/*" + ext, options)
-    files.forEach(function(filepath) {
-      let key = path.relative(jadeDir, filepath)
-      key = key.replace(ext, '')
-      if (includes) {
-        if (includes.indexOf(key) < 0) return
-      } else if (excludes) {
-        if (excludes.indexOf(key) >= 0) return
-      }
-      res[key] = filepath
+    dirs.forEach(item => {
+      const files = glob.sync(item.src + "/**/*" + ext, options)
+      files.forEach(function(filepath) {
+        let key = path.relative(item.relative, filepath)
+        key = key.replace(ext, '')
+        if (includes) {
+          if (includes.indexOf(key) < 0) return
+        } else if (excludes) {
+          if (excludes.indexOf(key) >= 0) return
+        }
+        res[key] = filepath
+      })
     })
   })
 

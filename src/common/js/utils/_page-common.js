@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import VueI18n from 'vue-i18n'
 import parseQuery, { encodeQuery } from 'utils/_parse-query.js'
+import { i18nInit } from 'compound-utils/i18n/_i18n-helper.js'
 
 export function pageInit (params = {}) {
   const {
@@ -10,18 +10,10 @@ export function pageInit (params = {}) {
 
   $LB.query = parseQuery(location.search)
 
-  Vue.use(VueI18n)
-
-  const i18n = new VueI18n({
-    locale: $LB.locale,
-    fallbackLocale: 'en-US',
-    messages: customI18N || {},
-    silentTranslationWarn: process.env.NODE_ENV === 'development'
-  })
+  i18nInit({vue, customI18N})
 
   if (!vue.el) {
     vue.el = "#root"
   }
-  vue.i18n = i18n
   new Vue(vue)
 }

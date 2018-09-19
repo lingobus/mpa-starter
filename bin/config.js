@@ -22,9 +22,10 @@ const envconfigs = {
   alias: {
     '@': path.resolve(__dirname, '../src'),
     "pages": path.resolve(__dirname, '../src/pages'),
-    "components": path.resolve(__dirname, '../src/components'),
+    "components": path.resolve(__dirname, '../src/common/components'),
     "api": path.resolve(__dirname, '../src/common/js/api'),
     "utils": path.resolve(__dirname, '../src/common/js/utils'),
+    "compound-utils": path.resolve(__dirname, '../src/common/compound-utils'),
     "img": path.resolve(__dirname, '../src/common/img'),
     "fonts": path.resolve(__dirname, '../src/common/fonts'),
     "common": path.resolve(__dirname, '../common'),
