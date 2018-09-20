@@ -5,6 +5,10 @@ function applyRouter(app) {
     res.render('index/index')
   })
 
+  router.get('/bem', function (req, res) {
+    res.render('bem')
+  })
+
   router.get('/mobile-layout', function (req, res) {
     res.render('mobile-layout')
   })
