@@ -3,11 +3,35 @@
 global-reset()
 reset-html5()
 
+@font-face
+  font-family: "Roboto-thin"
+  src: url('/static/fonts/roboto-thin-webfont.woff') format('woff')
+  font-weight: normal
+  font-style: normal
+
+@font-face
+  font-family: "Roboto-light"
+  src: url('/static/fonts/roboto-light-webfont.woff') format('woff')
+  font-weight: normal
+  font-style: normal
+
+@font-face
+  font-family: "Roboto-regular"
+  src: url('/static/fonts/roboto-regular-webfont.woff') format('woff')
+  font-weight: normal
+  font-style: normal
+
+html, body
+  font-family: "Roboto-regular", "Myriad Set Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif
+  height: 100%;
+  color: #333;
+  margin: 0
+  padding: 0
+  -webkit-font-smoothing: antialiased
 body
   font-size: 14px
-  font-family: "Roboto", "Myriad Set Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif
   font-weight: normal
-  -webkit-font-smoothing: antialiased
+
 *
   box-sizing: border-box
   -webkit-tap-highlight-color: rgba(0,0,0,0) // android no highlight
@@ -15,13 +39,5 @@ body
 *:before, *:after
   box-sizing: border-box
 
-.root-container
-  margin: 0 auto
-
 [v-cloak]
   display: none
-.clear-fix:before,
-.clear-fix:after
-  content: ''
-  display: table
-  clear: both

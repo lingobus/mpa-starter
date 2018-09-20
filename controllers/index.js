@@ -9,8 +9,20 @@ function applyRouter(app) {
     res.render('bem')
   })
 
-  router.get('/mobile-layout', function (req, res) {
-    res.render('mobile-layout')
+  router.get('/mobile-layout1', function (req, res) {
+    res.render('mobile-layout1')
+  })
+
+  router.get('/mobile-layout2', function (req, res) {
+    res.render('mobile-layout2')
+  })
+
+  router.get('/mobile-layout3', function (req, res) {
+    res.render('mobile-layout3')
+  })
+
+  router.get('/mobile-layout4', function (req, res) {
+    res.render('mobile-layout4')
   })
 
   router.get('/lazyload', function (req, res) {

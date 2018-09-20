@@ -1,0 +1,29 @@
+extends ../../common/jade/_base
+
+block meta
+  meta(name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,initial-scale=1")
+  +favicon()
+  +analytics()
+  +meta-seo()
+  if useLs
+    if isdev
+      include ../../common/jade/_seed
+    else
+      include ../../common/jade/_seed-min
+
+//- block libcss
+
+block css
+  +element-ui-css()
+  link(rel="stylesheet" href="/static/css/mobile-layout3/index.css")
+
+mixin content ()
+  div(id="container")
+    div(id="banner")
+    h1(id="title") 横屏全屏, 内容随屏幕宽度缩放
+    div(id="orientation-warning") 横屏体验更好
+block main
+  #root
+    +content()
+block js
+    script(src="/static/js/mobile-layout3/index.js")
