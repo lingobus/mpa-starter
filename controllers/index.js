@@ -1,44 +1,53 @@
 var router = require('express').Router()
 
 function applyRouter(app) {
-  router.get('/', function (req, res) {
-    res.render('index/index')
-  })
+  const pages = [
+    {
+      path: '/',
+      template: 'index',
+    },
+    {
+      path: '/bem',
+      template: 'bem',
+    },
+    {
+      path: '/mobile-layout1',
+      template: 'mobile-layout1',
+    },
+    {
+      path: '/mobile-layout2',
+      template: 'mobile-layout2',
+    },
+    {
+      path: '/mobile-layout3',
+      template: 'mobile-layout3',
+    },
+    {
+      path: '/mobile-layout4',
+      template: 'mobile-layout4',
+    },
+    {
+      path: '/lazyload',
+      template: 'lazyload',
+    },
+    {
+      path: '/add-edit-examine',
+      template: 'add-edit-examine',
+    },
+    {
+      path: '/login',
+      template: 'login',
+    },
+    {
+      path: '/register',
+      template: 'register',
+    },
+  ]
 
-  router.get('/bem', function (req, res) {
-    res.render('bem')
-  })
-
-  router.get('/mobile-layout1', function (req, res) {
-    res.render('mobile-layout1')
-  })
-
-  router.get('/mobile-layout2', function (req, res) {
-    res.render('mobile-layout2')
-  })
-
-  router.get('/mobile-layout3', function (req, res) {
-    res.render('mobile-layout3')
-  })
-
-  router.get('/mobile-layout4', function (req, res) {
-    res.render('mobile-layout4')
-  })
-
-  router.get('/lazyload', function (req, res) {
-    res.render('lazyload')
-  })
-
-  router.get('/add-edit-examine', function (req, res) {
-    res.render('add-edit-examine')
-  })
-
-  router.get('/login', function (req, res) {
-    res.render('login')
-  })
-
-  router.get('/register', function (req, res) {
-    res.render('register')
+  pages.forEach(p => {
+    router.get(p.path, function (req, res) {
+      res.render(p.template)
+    })
   })
 
   app.use(require('./i18n'))
