@@ -3,13 +3,7 @@ extends ../../common/jade/_base
 block meta
   meta(name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,initial-scale=1")
   +favicon()
-  +analytics()
   +meta-seo()
-  if useLs
-    if isdev
-      include ../../common/jade/_seed
-    else
-      include ../../common/jade/_seed-min
 
 //- block libcss
 
@@ -22,34 +16,9 @@ mixin content ()
     div(id="banner")
     h1(id="title") 可滚动，内容随屏幕宽度缩放（屏越大看到的东西越多)
     div(id="content")
+      - for (var i = 0; i < 100; i++) {
       div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
-      div(class="block")
+      }
 block main
   #root
     +content()

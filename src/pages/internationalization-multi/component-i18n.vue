@@ -27,7 +27,7 @@ p
 
 <script>
   import ElButton from 'element-ui/lib/button'
-  import { changeLocale } from 'compound-utils/i18n/_i18n-helper.js'
+  import { changeLocale } from 'compound-utils/i18n'
 
   export default {
     name: 'component-i18n',

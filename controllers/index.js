@@ -29,6 +29,10 @@ function applyRouter(app) {
     res.render('lazyload')
   })
 
+  router.get('/add-edit-examine', function (req, res) {
+    res.render('add-edit-examine')
+  })
+
   router.get('/login', function (req, res) {
     res.render('login')
   })
