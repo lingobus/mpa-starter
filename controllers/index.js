@@ -31,10 +31,6 @@ function applyRouter(app) {
       template: 'lazyload',
     },
     {
-      path: '/add-edit-examine',
-      template: 'add-edit-examine',
-    },
-    {
       path: '/login',
       template: 'login',
     },
@@ -51,6 +47,7 @@ function applyRouter(app) {
   })
 
   app.use(require('./i18n'))
+  app.use(require('./add-edit-search'))
   app.use(router)
 }
 

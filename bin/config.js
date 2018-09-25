@@ -26,6 +26,7 @@ const envconfigs = {
     "api": path.resolve(__dirname, '../src/common/js/api'),
     "utils": path.resolve(__dirname, '../src/common/js/utils'),
     "compound-utils": path.resolve(__dirname, '../src/common/compound-utils'),
+    "mixin": path.resolve(__dirname, '../src/common/mixin'),
     "img": path.resolve(__dirname, '../src/common/img'),
     "fonts": path.resolve(__dirname, '../src/common/fonts'),
     "common": path.resolve(__dirname, '../common'),

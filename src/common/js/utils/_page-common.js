@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import parseQuery, { encodeQuery } from 'utils/_parse-query.js'
 import { i18nInit } from 'compound-utils/i18n'
+import ElLoading from 'element-ui/lib/loading'
+import Icon from 'vue-awesome'
 
 export function pageInit (params = {}) {
   const {
@@ -9,6 +11,9 @@ export function pageInit (params = {}) {
   } = params
 
   $LB.query = parseQuery(location.search)
+
+  ElLoading.install(Vue)
+  Vue.component('fa-icon', Icon)
 
   i18nInit({vue, customI18N})
 

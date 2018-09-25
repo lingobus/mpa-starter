@@ -1,0 +1,16 @@
+extends ../../common/jade/_base
+
+block meta
+  +favicon()
+  +meta-seo()
+
+//- block libcss
+
+block css
+  +element-ui-css()
+  link(rel="stylesheet" href="/static/css/add-edit-search/index.css")
+
+block main
+  #root
+block js
+    script(src="/static/js/add-edit-search/index.js")
