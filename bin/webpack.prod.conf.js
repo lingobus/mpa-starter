@@ -6,7 +6,6 @@ var config = require('./config.js')
 var baseWebpackConfigs = require('./webpack.base.conf')
 var ManifestPlugin = require('webpack-manifest-plugin')
 var assetsPublicPath = config.prod.assetsPublicPath
-var plugins = baseWebpackConfigs[0].plugins || []
 var manifest = new ManifestPlugin({
   fileName: 'js/manifest-js.json',
   basePath: assetsPublicPath,
@@ -28,16 +27,15 @@ var manifest = new ManifestPlugin({
     return manifest;
   }
 })
-baseWebpackConfigs[0].plugins = plugins.concat(utils.getWebpackProdHelpPlugins().concat(manifest))
+baseWebpackConfigs.jsConfig.plugins = (baseWebpackConfigs.jsConfig.plugins || []).concat(utils.getWebpackProdHelpPlugins().concat(manifest))
 
 if (process.env.HOSTALIAS) {
   console.log('HOSTALIAS=', process.env.HOSTALIAS)
-  baseWebpackConfigs[0] = merge(baseWebpackConfigs[0], {
+  baseWebpackConfigs.jsConfig = merge(baseWebpackConfigs.jsConfig, {
     devtool: '#inline-source-map'
   })
 }
 
-plugins = baseWebpackConfigs[1].plugins || []
 manifest = new ManifestPlugin({
   fileName: 'css/manifest-stylus.json',
   basePath: assetsPublicPath,
@@ -59,11 +57,11 @@ manifest = new ManifestPlugin({
     return manifest;
   }
 })
-baseWebpackConfigs[1].plugins = plugins.concat(manifest)
+baseWebpackConfigs.stylusConfig.plugins =  (baseWebpackConfigs.stylusConfig.plugins || []).concat(manifest)
 
 var wpconfig = {
   externals: config.externals
 }
-baseWebpackConfigs[0] = merge(baseWebpackConfigs[0], wpconfig)
+baseWebpackConfigs.jsConfig = merge(baseWebpackConfigs.jsConfig, wpconfig)
 
 module.exports = baseWebpackConfigs

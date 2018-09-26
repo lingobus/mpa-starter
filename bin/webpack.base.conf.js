@@ -1,14 +1,10 @@
 var webpack = require('webpack')
 var path = require('path')
-var colors = require('colors')
 var utils = require('./utils.js')
 var config = require('./config.js')
-var pkg = require('../package.json')
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const env = process.env.NODE_ENV === 'development' ? 'dev' : 'prod'
 
-const configs = []
 const imageLoader = utils.getImageLoader(env)
 const fontLoader = utils.getFontsLoader(env)
 const lessLoader = utils.getLessLoader(env)
@@ -17,6 +13,7 @@ const vueLoader = utils.getVueLoader(env, {
     i18n: '@kazupon/vue-i18n-loader'
   }
 })
+
 const jsLoader = utils.getJsLoader(/\.jsx?$/, {
   exclude: /node_modules/,
   include: config.paths.src,
@@ -26,7 +23,7 @@ const jsLoader = utils.getJsLoader(/\.jsx?$/, {
 })
 
 var stylusLoader = utils.getStylusLoaderMaybeWithPlugin(false, env, env)
-configs.push({
+const jsConfig = {
   name: ' JavaScript '.yellow.bold.inverse,
   target: 'web',
   context: config.paths.root,
@@ -54,11 +51,11 @@ configs.push({
     }),
     utils.getCopyPlugins(env, config[env].assetsPublicPath)
   ]
-})
+}
 
 //stylus
 var stylusLoaderAndPlugins = utils.getStylusLoaderMaybeWithPlugin(true, env)
-configs.push({
+const stylusConfig = {
   name: ' Stylesheet '.cyan.bold.inverse,
   target: 'web',
   context: config.paths.root,
@@ -77,11 +74,11 @@ configs.push({
     rules: [imageLoader, fontLoader, stylusLoaderAndPlugins.loader]
   },
   plugins: stylusLoaderAndPlugins.plugins
-})
+}
 
 // jade
 const jadeLoaderAndPlugins = utils.getJadeLoader(env)
-configs.push({
+const jadeConfig = {
   name: ' Jade '.magenta.bold.inverse,
   target: 'node',
   context: config.paths.root,
@@ -95,6 +92,10 @@ configs.push({
     rules: [stylusLoaderAndPlugins.loader,imageLoader, fontLoader, jadeLoaderAndPlugins.loader]
   },
   plugins: jadeLoaderAndPlugins.plugins
-})
+}
 
-module.exports = configs
+module.exports = {
+  jsConfig,
+  stylusConfig,
+  jadeConfig
+}

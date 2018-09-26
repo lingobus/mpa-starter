@@ -1,0 +1,21 @@
+extends ../../common/jade/_base
+
+block meta
+  +favicon()
+  +meta-seo()
+
+//- block libcss
+
+block css
+  +element-ui-css()
+  link(rel="stylesheet" href="/static/css/login/index.css")
+
+mixin content ()
+  - var b = 'block'
+  center(class="#{b}")
+    p Login
+block main
+  #root
+    +content()
+block js
+    script(src="/static/js/login/index.js")

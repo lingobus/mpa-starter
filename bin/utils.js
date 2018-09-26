@@ -6,21 +6,7 @@ var webpack = require('webpack')
 var config = require('./config.js')
 var assign = require('object-assign')
 var shell = require('shelljs')
-var colors = require('colors')
-
-function resolve(dir) {
-  return path.join(__dirname, '..', dir)
-}
-
-function assetsPath(filepath) {
-  var dir = process.env.NODE_ENV === 'production' ? config.prod.assetsRoot : config.dev.assetsRoot
-  return path.posix.join(dir, filepath)
-}
-
-const supportLangs = [
-  'en-us',
-  'zh-cn',
-]
+var settings = require('../common/settings.js')
 
 function getEntries(extensions, options) {
   const res = {}
@@ -30,7 +16,7 @@ function getEntries(extensions, options) {
   const pagesDir = srcPath + '/pages'
   extensions.forEach(ext => {
     let files = glob.sync(pagesDir + "/*/index" + ext, options) // for example: page/home/index.js
-    supportLangs.forEach(lang => {
+    settings.SUPPORTED_LANGS.forEach(lang => {
       files = files.concat(glob.sync(pagesDir + "/*/" + lang + "/index" + ext, options)) // for example: page/home/en-us/index.js
     })
     files.forEach(function(filepath) {
@@ -64,7 +50,7 @@ exports.getJadeEntries = function(extensions, options) {
   // jade of page
   extensions.forEach(ext => {
     let files = glob.sync(pagesDir + "/*/index" + ext, options) // for example: page/home/index.jade
-    supportLangs.forEach(lang => {
+    settings.SUPPORTED_LANGS.forEach(lang => {
       files = files.concat(glob.sync(pagesDir + "/*/" + lang + "/index" + ext, options)) // for example: page/home/en-us/index.jade
     })
     files.forEach(function(filepath) {
@@ -366,6 +352,3 @@ exports.safeRm = function (_path) {
     }
   }
 }
-
-exports.assetsPath = assetsPath
-exports.resolve = resolve

@@ -3,5 +3,9 @@
  */
 module.exports = {
   PROJECT: 'hello-world',
-  Token: 'token-hello-world'
+  Token: 'token-hello-world',
+  SUPPORTED_LANGS: [
+    'en-us',
+    'zh-cn',
+  ]
 }

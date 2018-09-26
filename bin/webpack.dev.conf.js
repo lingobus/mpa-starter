@@ -13,7 +13,8 @@ var wpconfig = {
   }
 }
 
-baseWebpackConfigs.forEach(function (c) {
+Object.keys(baseWebpackConfigs).forEach(function (k) {
+  const c = baseWebpackConfigs[k]
   var plugins = utils.getWebpackDevHelperPlugins(c.name)
   if (typeof c.plugins == 'undefined') {
     c.plugins = plugins
@@ -22,7 +23,7 @@ baseWebpackConfigs.forEach(function (c) {
   }
 })
 
-baseWebpackConfigs[0] = merge(baseWebpackConfigs[0], wpconfig)
-baseWebpackConfigs[1].watch = true
-baseWebpackConfigs[2].watch = true
+baseWebpackConfigs.jsConfig = merge(baseWebpackConfigs.jsConfig, wpconfig)
+baseWebpackConfigs.stylusConfig.watch = true
+baseWebpackConfigs.jadeConfig.watch = true
 module.exports = baseWebpackConfigs

@@ -1,9 +1,8 @@
-const path = require('path')
+require('colors')
 const express = require('express')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
-const colors = require('colors')
 const useragent = require('express-useragent')
 
 const env = process.env.NODE_ENV === 'development' ? 'dev' : 'prod'
@@ -24,7 +23,7 @@ if (env === 'dev') {
   console.log('Using Development Env Config'.cyan.inverse)
   if (process.env.HMR) {
     console.log('Using HMR')
-    require('./bin/hmr.js')(app, staticPath)
+    require('./bin/hmr.js')(app)
   }
   app.locals.isdev = true
   app.locals.pretty = true
@@ -49,12 +48,6 @@ app.use(bodyParser.urlencoded({
 }))
 /* server static files */
 app.use('/static', express.static(staticPath))
-
-/* sitemap */
-// app.get('/sitemap.xml', function (req, res) {
-//   res.set('Content-Type', 'application/xml')
-//   res.sendFile(config.paths.views + '/sitemap.xml')
-// })
 
 /* middleware */
 require('./middlewares')(app)

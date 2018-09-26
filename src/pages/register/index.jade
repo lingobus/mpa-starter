@@ -1,0 +1,21 @@
+extends ../../common/jade/_base
+
+block meta
+  +favicon()
+  +meta-seo()
+
+//- block libcss
+
+block css
+  +element-ui-css()
+  link(rel="stylesheet" href="/static/css/bem/index.css")
+
+mixin content ()
+  - var b = 'block'
+  center(class="#{b}")
+    p Register
+block main
+  #root
+    +content()
+block js
+    script(src="/static/js/bem/index.js")
