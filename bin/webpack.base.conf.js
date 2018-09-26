@@ -11,6 +11,9 @@ const lessLoader = utils.getLessLoader(env)
 const vueLoader = utils.getVueLoader(env, {
   loaders: {
     i18n: '@kazupon/vue-i18n-loader'
+  },
+  preLoaders: {
+    jade: 'jade-deps-loader'
   }
 })
 

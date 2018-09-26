@@ -43,6 +43,7 @@
     "http-proxy-middleware": "0.17.4",
     "jade": "1.11.0",
     "jade-url-replace-loader": "^1.0.5",
+    "jade-deps-loader": "zzz945/jade-deps-loader#1.0.0",
     "less-loader": "4.0.3",
     "morgan": "1.8.1",
     "object-assign": "4.1.1",

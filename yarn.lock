@@ -2905,6 +2905,12 @@ isstream@0.1.x, isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
+jade-deps-loader@zzz945/jade-deps-loader#1.0.0:
+  version "1.0.0"
+  resolved "https://codeload.github.com/zzz945/jade-deps-loader/tar.gz/08e241d433975759a8654a6bb8280720e6a43638"
+  dependencies:
+    loader-utils "^1.1.0"
+
 jade-url-replace-loader@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/jade-url-replace-loader/-/jade-url-replace-loader-1.0.5.tgz#37b3e1841f0dceb91838e2b951b779e8ff422a1f"

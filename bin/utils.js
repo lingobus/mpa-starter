@@ -99,7 +99,7 @@ exports.getImageLoader = function(env, limit) {
     loader: 'url-loader',
     query: {
       emitFile: false, // 这里只负责生成url, copy plugin负责拷贝图片
-      context: path.join(config.paths.src, 'img'),
+      context: path.join(config.paths.src),
       limit: limit || 10000,
       name: ImageNames[env]
     }

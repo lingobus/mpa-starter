@@ -1,4 +1,5 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
+require('colors')
 var path = require('path')
 var prettyjson = require('prettyjson')
 var buildPath = '../build'
