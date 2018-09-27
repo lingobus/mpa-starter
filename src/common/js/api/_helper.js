@@ -1,4 +1,6 @@
 import axios from 'axios'
+import cookies from 'cookies-js'
+import Settings from 'common/settings.js'
 
 export function get(...args) {
   return axios.get.apply(axios, args)
@@ -40,6 +42,22 @@ export function makePost(url, opts = {}) {
       } else throws(e)
     })
   }
+}
+
+
+export function saveTokenAndCleanUp (token) {
+  const OneWeek = 604800
+  if (token !== cookies.get(Settings.TOKEN)) {
+    cleanup()
+  }
+  cookies.set(Settings.TOKEN, token, {
+    expires: OneWeek
+  })
+}
+
+// logout或切换账户时需要清理的cookie都放在这里
+function cleanup () {
+  cookies.expire(Settings.TOKEN)
 }
 
 //modify the prefix to meet your needs

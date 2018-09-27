@@ -11,9 +11,26 @@ block css
   link(rel="stylesheet" href="/static/css/login/index.css")
 
 mixin content ()
-  - var b = 'block'
-  center(class="#{b}")
-    p Login
+  - var b = 'login'
+  div(class="#{b}")
+    el-form(ref="form", :model="user")
+      el-form-item(
+        prop="account",
+        :rules="rules.account",
+      )
+        el-input(v-model="user.account", placeholder="Phone/Email")
+      el-form-item(
+        prop="pswd",
+        :rules="rules.pswd",
+      )
+        password-input(
+          v-model="user.pswd",
+          placeholder="Password",
+        )
+      a(href="/reset-password") Forgot password?<br><br>
+      el-button.login-btn(type="primary", @click="handleLogin") Login
+      el-button(@click="handleWechatLogin") Wechat
+      el-button(@click="handleFacebookLogin") Facebook
 block main
   #root
     +content()

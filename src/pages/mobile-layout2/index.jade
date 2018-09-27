@@ -16,9 +16,8 @@ mixin content ()
     div(id="banner")
     h1(id="title") 可滚动，内容随屏幕宽度缩放（屏越大看到的东西越多)
     div(id="content")
-      - for (var i = 0; i < 100; i++) {
-      div(class="block")
-      }
+      - for (var i = 0; i < 100; i++)
+        div(class="block")
 block main
   #root
     +content()

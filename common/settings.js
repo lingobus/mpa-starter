@@ -3,7 +3,7 @@
  */
 module.exports = {
   PROJECT: 'hello-world',
-  Token: 'token-hello-world',
+  TOKEN: 'token-hello-world',
   SUPPORTED_LANGS: [
     'en-us',
     'zh-cn',

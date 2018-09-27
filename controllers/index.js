@@ -38,6 +38,10 @@ function applyRouter(app) {
       path: '/register',
       template: 'register',
     },
+    {
+      path: '/reset-password',
+      template: 'reset-password',
+    },
   ]
 
   pages.forEach(p => {
