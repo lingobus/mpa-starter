@@ -10,10 +10,12 @@ import PasswordInput from 'components/password-input/index.vue'
 
 import {validatePhone, validateEmail, validatePassword} from 'utils/_validator.js'
 import api from 'api/_login.api.js'
+import MessageMixin from "mixin/message"
 
 pageInit ({
   vue: {
     name: 'Login',
+    mixins: [MessageMixin],
     components: {
       ElForm,
       ElFormItem,

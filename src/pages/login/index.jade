@@ -18,19 +18,24 @@ mixin content ()
         prop="account",
         :rules="rules.account",
       )
-        el-input(v-model="user.account", placeholder="Phone/Email")
+        el-input(v-model="user.username",
+          name="username",
+          auto-complete="username",
+          placeholder="Phone/Email/User Name")
       el-form-item(
         prop="pswd",
         :rules="rules.pswd",
       )
         password-input(
           v-model="user.pswd",
+          autocomplete="current-password",
           placeholder="Password",
         )
       a(href="/reset-password") Forgot password?<br><br>
       el-button.login-btn(type="primary", @click="handleLogin") Login
       el-button(@click="handleWechatLogin") Wechat
       el-button(@click="handleFacebookLogin") Facebook
+
 block main
   #root
     +content()

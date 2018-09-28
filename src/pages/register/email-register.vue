@@ -4,20 +4,37 @@
       prop="email",
       :rules="rules.email",
     )
-      el-input.email-input(
+      el-input(
         v-model="user.email",
-        :autofocus="true",
+        name="email",
+        type="email",
+        auto-complete="email",
         placeholder="Email",
       )
     el-form-item(
       prop="pswd",
       :rules="rules.pswd",
     )
-      password-input.password-input(
+      password-input(
         v-model="user.pswd",
+        autocomplete="new-password",
         placeholder="Password",
       )
-    el-button.login-btn(type="primary", @click="handleEmailLogin") Login
+    el-form-item(
+      prop="repswd",
+      :rules="rules.repswd",
+    )
+      password-input(
+        v-model="user.repswd",
+        name="repswd",
+        autocomplete="new-password",
+        placeholder="Re Password",
+      )
+    el-form-item(
+      prop="code",
+    )
+      el-input(v-model="user.code", placeholder="Verification code")
+    el-button.login-btn(type="primary", @click="handleEmailRegister") Register
 </template>
 
 <style lang="stylus" scoped>
@@ -33,11 +50,12 @@ import ElInput from 'element-ui/lib/input'
 import ElButton from 'element-ui/lib/button'
 import PasswordInput from 'components/password-input/index.vue'
 import {validateEmail, validatePassword} from 'utils/_validator.js'
-import api from 'api/_email-login.api.js'
+import api from 'api/_register.api.js'
+import MessageMixin from "mixin/message"
 
 export default {
-  name: 'email-login',
-  mixins: [],
+  name: 'email-register',
+  mixins: [MessageMixin],
   components: {
     ElInput,
     ElButton,
@@ -50,6 +68,8 @@ export default {
       user: {
         email: '',
         pswd: '',
+        repswd: '',
+        code: '',
       },
       isExist: true,
       rules: {
@@ -69,20 +89,27 @@ export default {
             cb()
           }
         },
+        repswd: {
+          validator: (rule, value, cb) => {
+            if (value && validatePassword(value)) cb()
+            else if (value !== this.user.pswd) cb(new Error('Two passwords are different'))
+            else cb(new Error('Password is not valid'))
+          }
+        },
       }
     }
   },
   mounted () {
   },
   methods: {
-    handleEmailLogin () {
+    handleEmailRegister () {
       this.$refs.form.validate(valid => {
         if (!valid) return
         api.isRegistered({
           email: this.user.email
         }).then(registered => {
-          if (registered) {
-            return api.login(this.user).then(_ => location.href = '/')
+          if (!registered) {
+            return api.register(this.user).then(_ => location.href = '/')
           } else {
             this.$error('Not registered')
           }

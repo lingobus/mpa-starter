@@ -2,9 +2,11 @@
   .password-input
     el-input(
       :value="value",
-      @input="inputHandle",
+      :name="name",
       :placeholder="placeholder",
-      :type="type"
+      :type="type",
+      :auto-complete="autocomplete",
+      @input="inputHandle",
     )
     el-button.input-toggle-type(type="text", @click="clickHandle")
       img(:src="icon")
@@ -27,6 +29,14 @@ export default {
   props: {
     value: [String, Number],
     placeholder: String,
+    autocomplete: {
+      type: String,
+      default: 'off',
+    },
+    name: {
+      type: String,
+      default: 'password',
+    },
     initialize: Boolean
   },
 

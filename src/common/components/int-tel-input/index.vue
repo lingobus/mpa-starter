@@ -52,9 +52,11 @@
               span.int-countries-code(v-text="`+${item.dialCode}`")
     .int-tel-input
       el-input(
-        type="text",
+        type="tel",
         :readonly="disabled",
         :value="phoneNumber",
+        name="phone_number",
+        auto-complete="tel",
         @input="phoneNumberInputHandel",
         @keydown="handleTelInputKeyDown",
         :placeholder="placeholder"
@@ -356,7 +358,7 @@
       placeholder: {
         type: String,
         default: 'Phone number'
-      }
+      },
     },
 
     data () {

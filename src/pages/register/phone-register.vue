@@ -4,9 +4,9 @@
       prop="phone",
       :rules="rules.phone",
     )
-      el-input(v-model="user.phone")
-      int-tel-input.phone-input(
+      int-tel-input(
         :phoneNumber="user.phone",
+        :countryAbbr="user.countryAbbr",
         @countryChange="countryChange",
         @phoneNumberChange="phoneNumberChange",
         placeholder="Phone"
@@ -15,11 +15,26 @@
       prop="pswd",
       :rules="rules.pswd",
     )
-      password-input.password-input(
+      password-input(
         v-model="user.pswd",
+        autocomplete="new-password",
         placeholder="Password",
       )
-    el-button.login-btn(type="primary", @click="handlePhoneLogin") Login
+    el-form-item(
+      prop="repswd",
+      :rules="rules.repswd",
+    )
+      password-input(
+        v-model="user.repswd",
+        name="repswd",
+        autocomplete="new-password",
+        placeholder="Re Password",
+      )
+    el-form-item(
+      prop="code",
+    )
+      el-input(v-model="user.code", placeholder="Verification code")
+    el-button.login-btn(type="primary", @click="handlePhoneRegister") Login
 </template>
 
 <style lang="stylus" scoped>
@@ -32,21 +47,24 @@
 import ElForm from 'element-ui/lib/form'
 import ElFormItem from 'element-ui/lib/form-item'
 import ElButton from 'element-ui/lib/button'
+import ElInput from 'element-ui/lib/input'
 
 import IntTelInput from 'components/int-tel-input/index.vue'
 import PasswordInput from 'components/password-input/index.vue'
 import {validatePhone, validatePassword} from 'utils/_validator.js'
-import api from 'api/_phone-login.api.js'
+import api from 'api/_login.api.js'
+import MessageMixin from "mixin/message"
 
 export default {
-  name: 'phone-login',
-  mixins: [],
+  name: 'phone-register',
+  mixins: [MessageMixin],
   components: {
     IntTelInput,
     PasswordInput,
     ElButton,
     ElForm,
     ElFormItem,
+    ElInput,
   },
   data () {
     return {
@@ -55,6 +73,8 @@ export default {
         countryCode: null,
         phone: '',
         pswd: '',
+        repawd: '',
+        code: '',
       },
       rules: {
         phone: {
@@ -73,6 +93,15 @@ export default {
             cb()
           }
         },
+        repswd: {
+          validator: (rule, value, cb) => {
+            if (value) {
+              if (!validatePassword(value)) cb(new Error('Password is not valid'))
+              else if (value !== this.user.pswd) cb(new Error('Two passwords are different'))
+              else cb()
+            } else cb(new Error('Password is not valid'))
+          }
+        },
       }
     }
   },
@@ -85,15 +114,13 @@ export default {
   },
   methods: {
     countryChange (country) {
-      this.isExist = true
       this.user.countryAbbr = country.code
       this.user.countryCode = country.dialCode
     },
     phoneNumberChange (num) {
-      this.isExist = true
       this.user.phone = num
     },
-    handlePhoneLogin () {
+    handlePhoneRegister () {
       this.$refs.form.validate(valid => {
         if (!valid) return
         api.isRegistered({

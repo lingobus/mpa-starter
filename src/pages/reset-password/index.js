@@ -33,7 +33,7 @@ pageInit ({
           phone: '',
           email: '',
           pswd: '',
-          pswd2: '',
+          repswd: '',
           code: '',
         },
         rules: {
@@ -55,13 +55,13 @@ pageInit ({
               else cb(new Error('Password is not valid'))
             }
           },
-          pswd2: {
-            validator: (rule, value, cb) => {
-              if (value && validatePassword(value)) cb()
+          validator: (rule, value, cb) => {
+            if (value) {
+              if (!validatePassword(value)) cb(new Error('Password is not valid'))
               else if (value !== this.user.pswd) cb(new Error('Two passwords are different'))
-              else cb(new Error('Password is not valid'))
-            }
-          },
+              else cb()
+            } else cb(new Error('Password is not valid'))
+          }
         }
       }
     },
