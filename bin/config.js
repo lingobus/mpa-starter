@@ -9,7 +9,6 @@ const envconfigs = {
     root: path.resolve(__dirname, '..'),
     src: path.resolve(__dirname, '../src'),
     build: path.resolve(__dirname, buildPath),
-    views: path.resolve(__dirname, '../views')
   },
   externals: {
     'axios': 'axios',
@@ -37,7 +36,7 @@ const envconfigs = {
     },
     port: 8080,
     assetsRoot: path.resolve(__dirname, buildPath, 'prod'),
-    assetsPublicPath: '/static/'
+    assetsPublicPath: '/static/',
   },
   dev: {
     env: {
@@ -46,7 +45,9 @@ const envconfigs = {
     port: 8080,
     assetsRoot: path.resolve(__dirname, buildPath, 'dev'),
     assetsPublicPath: '/static/',
-  }
+  },
+  imgHashLength: 7,
+  imgReg: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
 }
 const env = process.env.NODE_ENV === 'development' ? 'dev' : 'prod'
 console.log('Enviroment Configuration:'.magenta.bold)

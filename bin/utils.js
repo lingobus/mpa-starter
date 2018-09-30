@@ -40,62 +40,13 @@ function getEntries(extensions, options) {
 }
 exports.getEntries = getEntries
 
-exports.getJadeEntries = function(extensions, options) {
-  const res = {}
-  options = options || {}
-  const verbose = options.verbose || true
-  const srcPath = config.paths.src
-  const pagesDir = srcPath + '/pages'
-
-  // jade of page
-  extensions.forEach(ext => {
-    let files = glob.sync(pagesDir + "/*/index" + ext, options) // for example: page/home/index.jade
-    settings.SUPPORTED_LANGS.forEach(lang => {
-      files = files.concat(glob.sync(pagesDir + "/*/" + lang + "/index" + ext, options)) // for example: page/home/en-us/index.jade
-    })
-    files.forEach(function(filepath) {
-      const key = path.relative(srcPath, filepath.substring(0, filepath.lastIndexOf('.')))
-      res[(options.relativePublicPath || '') + key] = filepath
-    })
-  })
-
-  // jade of common
-  const utilsDirs = [
-    srcPath + '/common/jade',
-    srcPath + '/common/compound-utils'
-  ]
-  extensions.forEach(ext => {
-    utilsDirs.forEach(dir => {
-      const files = glob.sync(dir + "/**/*" + ext, options)
-      files.forEach(function(filepath) {
-        let key = path.relative(srcPath, filepath)
-        key = key.replace(ext, '')
-        res[key] = filepath
-      })
-    })
-  })
-
-  const extensionsString = extensions.join(' and ')
-  if (verbose) {
-    console.log(('Entries for ' + extensionsString).cyan.bold)
-    for (var k in res) {
-      console.log(k.green, '=>\n  ', res[k].yellow)
-    }
-  }
-  if (!Object.keys(res).length) {
-    console.error('!!!Got no entry for ' + extensionsString + '!!!')
-  }
-
-  return res
-}
-
 const ImageNames = {
   dev: 'img/[path][name].[ext]',
   prod: 'img/[path][name]-[hash:7].[ext]'
 }
 exports.getImageLoader = function(env, limit) {
   return {
-    test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+    test: config.imgReg,
     loader: 'url-loader',
     query: {
       emitFile: false, // 这里只负责生成url, copy plugin负责拷贝图片
@@ -152,7 +103,6 @@ const CssNames = {
    */
 exports.getStylusLoaderMaybeWithPlugin = function(withPlugin, env) {
   const test = /\.styl$/
-  var loader
   if (withPlugin) {
     var ExtractTextPlugin = require('extract-text-webpack-plugin')
     var loaderStr = env == 'dev' ?
@@ -188,75 +138,6 @@ exports.getLessLoader = function (env) {
   }
 }
 
-function try_require(path_) {
-  var json = {}
-  try {
-    if (fs.existsSync(path_)) {
-      json = require(path_)
-    }
-  } catch (e) {}
-  return json
-}
-
-/**
- * this loader just copy jade file to views for express
- * @param  {Boolean} withPlugin
- * @param  {String} env ['dev' | 'prod']
- * @return {Object} [{test,loader} | {loader,plugins}]
- */
-exports.getJadeLoader = function(env) {
-  const test = /\.jade$/
-  var manifest = null
-  var ExtractTextPlugin = require('extract-text-webpack-plugin')
-  return {
-    loader: {
-      test: test,
-      loader: ExtractTextPlugin.extract({
-        use: {
-          loader: 'jade-url-replace-loader',
-          options: {
-            attrs: ['a:href', 'img:src','script:src','link:href', 'video:src', 'source:src', 'audio:src', 'img:data-src'],
-            getEmitedFilePath: function (url) {
-              if (env === 'dev') return url
-              if (!manifest) {
-                var assetsRoot = config[env].assetsRoot
-                var m1 = try_require(path.join(assetsRoot, 'js/manifest-js.json'))
-                var m2 = try_require(path.join(assetsRoot, 'css/manifest-stylus.json'))
-                var m3 = try_require(path.join(assetsRoot, 'img/manifest-img.json'))
-                manifest = assign({}, m1, m2, m3)
-                console.log('Process view files')
-                console.log('Manifest from previous compilation:')
-                for (var file in manifest) {
-                  console.log(' ' + file.green + ' => \n   ' + manifest[file].yellow)
-                }
-              }
-              var hashed = manifest[url]
-              if (hashed) {
-                return hashed
-              } else {
-                if (url.indexOf('/lib/') < 0) {
-                  if (url.indexOf('javascript:;') === 0 ||
-                    url.indexOf('mailto:') === 0 ||
-                    url.indexOf('http') === 0 ||
-                    url.indexOf('#{') === 0) {
-                      //do not care above url
-                  }  else {
-                    console.warn('Not found ' + url + ' in manifest files'.magenta)
-                  }
-                }
-                return url
-              }
-            }
-          }
-        }
-      })
-    },
-    plugins: [
-      new ExtractTextPlugin('[name].jade')
-    ]
-  }
-}
-
 const ansiRegex = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><]/g
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 var WebpackNotifierPlugin = require('webpack-notifier');
@@ -284,33 +165,15 @@ exports.getWebpackProdHelpPlugins = function() {
 }
 
 var CopyWebpackPlugin = require('copy-webpack-plugin')
-var crypto = require('crypto')
-var manifsetImg = {}
-exports.getCopyPlugins = function (env, assetsPublicPath) {
-  var tpl = env === 'dev' ? '[path][name].[ext]' : '[path][name]-[hash:7].[ext]'
+exports.getCopyAssetsPlugin = function (env) {
+  var imgTpl = env === 'dev' ? '[path][name].[ext]' : '[path][name]-[hash:7].[ext]'
   return new CopyWebpackPlugin([
+    /* copy static files, add more if needed */
     {
       context: config.paths.src,
       from: '**/*.+(png|svg|jpg|gif)',
-      to: path.join(config[env].assetsRoot, 'img/' + tpl),
-      transform: function (content, filepath) {
-        if (env === 'dev') return content
-        var hash = crypto.createHash('md5').update(content).digest('hex').slice(0, 7)
-        var ext = path.extname(filepath)
-        var dir = path.dirname(filepath)
-        var basename = path.basename(filepath, ext)
-        if (basename[basename.length - 1] == '_') return content
-        var relativePath = path.relative(config.paths.src, dir)
-        var imgPathNoHash = 'img/' + relativePath + '/' + basename + ext
-        var imgPath = 'img/' + relativePath + '/' + basename + '-' + hash + ext
-        manifsetImg[assetsPublicPath + imgPathNoHash] = assetsPublicPath + imgPath
-        const imgDir = path.join(config[env].assetsRoot, 'img')
-        !fs.existsSync(imgDir) && fs.mkdirSync(imgDir)
-        fs.writeFileSync(path.join(imgDir, 'manifest-img.json'), JSON.stringify(manifsetImg, null, 2))
-        return content
-      },
+      to: path.join(config[env].assetsRoot, 'img/' + imgTpl),
     },
-    /* copy static files, add more if needed */
     {
       from: path.join(config.paths.src, 'common/css/lib'),
       to: path.join(config[env].assetsRoot, 'css/lib')
@@ -331,6 +194,76 @@ exports.getCopyPlugins = function (env, assetsPublicPath) {
     //   from: path.join(config.paths.src, 'html/robots.txt'),
     //   to: path.join(config.paths.views, 'robots.txt')
     // }
+  ])
+}
+
+exports.getCopyJadePlugin = function (env) {
+  var jadeTpl = '[path][name].[ext]'
+  var manifest = null
+  return new CopyWebpackPlugin([
+    // copy jade and add hash to link in production mode
+    {
+      context: config.paths.src,
+      from: '**/*.jade',
+      to: path.join(config.paths.build + '/' + env + '/views/' + jadeTpl),
+      transform: function (content, filepath) {
+        function getHashedFilePath (url) {
+          if (!manifest) { // make sure to require once
+            function try_require(path) {
+              if (fs.existsSync(path)) {
+                return require(path)
+              } else {
+                return {}
+              }
+            }
+
+            var assetsRoot = config[env].assetsRoot
+            var m1 = try_require(path.join(assetsRoot, 'js/manifest-js.json'))
+            var m2 = try_require(path.join(assetsRoot, 'css/manifest-stylus.json'))
+            var m3 = try_require(path.join(assetsRoot, 'img/manifest-img.json'))
+
+            manifest = assign({}, m1, m2, m3)
+            console.log('Process view files')
+            console.log('Manifest from previous compilation:')
+            for (var file in manifest) {
+              console.log(' ' + file.green + ' => \n   ' + manifest[file].yellow)
+            }
+          }
+
+          // find hashed link in manifest
+          var hashed = manifest[url]
+          if (hashed) {
+            return hashed
+          } else {
+            if (url.indexOf('/lib/') < 0 &&
+              url.indexOf('javascript:;') < 0 &&
+              url.indexOf('mailto:') <= 0 &&
+              url.indexOf('http') <= 0 &&
+              url.indexOf('#{') <= 0) {
+                console.warn('Not found ' + url + ' in manifest files'.magenta)
+            }
+            return url
+          }
+        }
+
+        if (env === 'dev') return content // not add hash in dev mode
+
+        content = content.toString('utf8')
+
+        // find concerned attr link
+        const attributes = ['img:src','script:src','link:href', 'video:src', 'source:src', 'audio:src', 'img:data-src']
+        var parseAttr = require("./attr-parser.js");
+        var links = parseAttr(content, function(tag, attr) {
+          return attributes.indexOf(tag + ":" + attr) >= 0;
+        });
+
+        if (links.length) {
+          content = content.replace(new RegExp(links.map(l => l.value).join('|'), 'gi'), getHashedFilePath)
+        }
+
+        return Buffer.from(content, 'utf8')
+      },
+    },
   ])
 }
 

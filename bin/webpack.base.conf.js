@@ -52,7 +52,7 @@ const jsConfig = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
-    utils.getCopyPlugins(env, config[env].assetsPublicPath)
+    utils.getCopyAssetsPlugin(env),
   ]
 }
 
@@ -79,26 +79,20 @@ const stylusConfig = {
   plugins: stylusLoaderAndPlugins.plugins
 }
 
-// jade
-const jadeLoaderAndPlugins = utils.getJadeLoader(env)
 const jadeConfig = {
-  name: ' Jade '.magenta.bold.inverse,
-  target: 'node',
-  context: config.paths.root,
-  entry: utils.getJadeEntries(['.jade']),
+  name: ' Jade '.cyan.bold.inverse,
+  target: 'web',
+  entry: config.paths.root + '/bin/tmp.js',
   output: {
-    path: config.paths.views,
-    filename: '[name].jade',
-    publicPath: config[env].assetsPublicPath
+    path: config.paths.build,
+    filename: 'tmp.js'
+
   },
-  module: {
-    rules: [stylusLoaderAndPlugins.loader,imageLoader, fontLoader, jadeLoaderAndPlugins.loader]
-  },
-  plugins: jadeLoaderAndPlugins.plugins
+  plugins: [utils.getCopyJadePlugin(env)]
 }
 
 module.exports = {
   jsConfig,
   stylusConfig,
-  jadeConfig
+  jadeConfig,
 }

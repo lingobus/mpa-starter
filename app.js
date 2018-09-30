@@ -16,7 +16,7 @@ console.log('Using Node %s'.green.bold, process.version)
 console.log(('Static Directory set to:\n  '.magenta.bold + staticPath).green)
 
 var app = express()
-app.set('views', config.paths.views + '/pages')
+app.set('views', config.paths.build + '/' + env + '/views/pages')
 app.set('view engine', 'jade')
 
 if (env === 'dev') {

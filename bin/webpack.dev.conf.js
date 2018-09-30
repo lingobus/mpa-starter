@@ -1,8 +1,8 @@
-var webpack = require('webpack')
 var utils = require('./utils.js')
 var merge = require('webpack-merge')
 var config = require('./config.js')
 var baseWebpackConfigs = require('./webpack.base.conf')
+var WriteFilePlugin = require('write-file-webpack-plugin')
 
 var wpconfig = {
   devtool: '#eval-source-map',
@@ -23,7 +23,14 @@ Object.keys(baseWebpackConfigs).forEach(function (k) {
   }
 })
 
+baseWebpackConfigs.jadeConfig.plugins.push(
+  new WriteFilePlugin({
+    // Write only files that have ".jade" extension to disk
+    test: /\.jade$/,
+    useHashIndex: true
+  })
+)
+
 baseWebpackConfigs.jsConfig = merge(baseWebpackConfigs.jsConfig, wpconfig)
 baseWebpackConfigs.stylusConfig.watch = true
-baseWebpackConfigs.jadeConfig.watch = true
 module.exports = baseWebpackConfigs
