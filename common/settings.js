@@ -7,5 +7,11 @@ module.exports = {
   SUPPORTED_LANGS: [
     'en-us',
     'zh-cn',
-  ]
+  ],
+  DEFAULT_LANG: 'en-us',
+  DEFAULT_SEO: {
+    title: 'hello-world',
+    keywords: 'hello-world',
+    description: 'hello-world',
+  },
 }

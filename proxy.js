@@ -1,6 +1,6 @@
 'use strict'
+require('colors')
 const fs = require('fs')
-const colors = require('colors')
 const env = process.env.NODE_ENV === 'development' ? 'dev' : 'prod'
 
 /**

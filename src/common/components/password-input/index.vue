@@ -13,17 +13,12 @@
 </template>
 
 <script>
-import ElInput from 'element-ui/lib/input'
-import ElButton from 'element-ui/lib/button'
-
 import IconCloseEye from './img/close-eye.svg'
 import IconOpenEye from './img/open-eye.svg'
 
 export default {
   name: "PasswordInput",
   components : {
-    ElInput,
-    ElButton,
   },
 
   props: {

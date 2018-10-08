@@ -4,12 +4,12 @@
       prop="phone",
       :rules="rules.phone",
     )
-      int-tel-input(
-        :phoneNumber="user.phone",
-        :countryAbbr="user.countryAbbr",
-        @countryChange="countryChange",
-        @phoneNumberChange="phoneNumberChange",
-        placeholder="Phone"
+      el-input(
+        v-model="user.phone",
+        name="phone",
+        type="phone",
+        auto-complete="phone",
+        placeholder="Phone",
       )
     el-form-item(
       prop="pswd",
@@ -44,11 +44,6 @@
 
 <script>
 
-import ElForm from 'element-ui/lib/form'
-import ElFormItem from 'element-ui/lib/form-item'
-import ElButton from 'element-ui/lib/button'
-import ElInput from 'element-ui/lib/input'
-
 import IntTelInput from 'components/int-tel-input/index.vue'
 import PasswordInput from 'components/password-input/index.vue'
 import {validatePhone, validatePassword} from 'utils/_validator.js'
@@ -61,16 +56,10 @@ export default {
   components: {
     IntTelInput,
     PasswordInput,
-    ElButton,
-    ElForm,
-    ElFormItem,
-    ElInput,
   },
   data () {
     return {
       user: {
-        countryAbbr: 'us',
-        countryCode: null,
         phone: '',
         pswd: '',
         repawd: '',
@@ -113,13 +102,6 @@ export default {
   mounted () {
   },
   methods: {
-    countryChange (country) {
-      this.user.countryAbbr = country.code
-      this.user.countryCode = country.dialCode
-    },
-    phoneNumberChange (num) {
-      this.user.phone = num
-    },
     handlePhoneRegister () {
       this.$refs.form.validate(valid => {
         if (!valid) return

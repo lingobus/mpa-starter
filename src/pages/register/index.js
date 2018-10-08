@@ -1,9 +1,6 @@
 /* eslint-disable */
 import { pageInit } from 'utils/_page-common.js'
-
-import ElTabs from 'element-ui/lib/tabs'
-import ElTabPane from 'element-ui/lib/tab-pane'
-import ElButton from 'element-ui/lib/button'
+import './index.styl'
 
 import EmailRegister from './email-register.vue'
 import PhoneRegister from './phone-register.vue'
@@ -15,9 +12,6 @@ pageInit ({
   vue: {
     name: 'Register',
     components: {
-      ElTabs,
-      ElTabPane,
-      ElButton,
       EmailRegister,
       PhoneRegister,
     },

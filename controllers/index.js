@@ -1,4 +1,5 @@
-var router = require('express').Router()
+const router = require('express').Router()
+const DEFAULT_SEO = require('../common/settings.js').DEFAULT_SEO
 
 function applyRouter(app) {
   const pages = [
@@ -46,7 +47,7 @@ function applyRouter(app) {
 
   pages.forEach(p => {
     router.get(p.path, function (req, res) {
-      res.render(p.template)
+      res.render(p.template, Object.assign({}, DEFAULT_SEO, p.locals))
     })
   })
 

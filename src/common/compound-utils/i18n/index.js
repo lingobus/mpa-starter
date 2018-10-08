@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import VueI18n from 'vue-i18n'
+// import Vue from 'vue'
+// import VueI18n from 'vue-i18n'
 import cookies from 'cookies-js'
 
 export function i18nInit (params = {}) {

@@ -23,7 +23,7 @@
       el-input(v-model="queryParams.email", placeholder="Email")
   block table-columns
     el-table-column(label="ID", prop="id")
-      template(scope)
+      template(slot-scope="scope")
         a(href="javascript;", @click="$route.push('/add-edit-search/edit?disabled=true')") {{scope.row.id}}
     el-table-column(label="Name", prop="name")
     el-table-column(label="Age", prop="age")

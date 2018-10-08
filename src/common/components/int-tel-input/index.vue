@@ -336,13 +336,11 @@
     'O', 'P', 'Q', 'R', 'S', 'T',
     'U', 'V', 'W', 'X', 'Y', 'Z'
   ]
-  import ElInput from 'element-ui/lib/input'
 
   export default {
     name: 'int-tel-input',
 
 		components: {
-      ElInput
 		},
 
     props: {

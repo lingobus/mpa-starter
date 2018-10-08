@@ -44,10 +44,6 @@
 
 <script>
 
-import ElForm from 'element-ui/lib/form'
-import ElFormItem from 'element-ui/lib/form-item'
-import ElInput from 'element-ui/lib/input'
-import ElButton from 'element-ui/lib/button'
 import PasswordInput from 'components/password-input/index.vue'
 import {validateEmail, validatePassword} from 'utils/_validator.js'
 import api from 'api/_register.api.js'
@@ -57,11 +53,7 @@ export default {
   name: 'email-register',
   mixins: [MessageMixin],
   components: {
-    ElInput,
-    ElButton,
     PasswordInput,
-    ElForm,
-    ElFormItem,
   },
   data () {
     return {

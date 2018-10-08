@@ -1,26 +1,18 @@
 /* eslint-disable */
 import { pageInit } from 'utils/_page-common.js'
 
-import ElForm from 'element-ui/lib/form'
-import ElFormItem from 'element-ui/lib/form-item'
-import ElButton from 'element-ui/lib/button'
-import ElInput from 'element-ui/lib/input'
-
 import PasswordInput from 'components/password-input/index.vue'
 
 import {validatePhone, validateEmail, validatePassword} from 'utils/_validator.js'
 import api from 'api/_login.api.js'
 import MessageMixin from "mixin/message"
+import './index.styl'
 
 pageInit ({
   vue: {
     name: 'Login',
     mixins: [MessageMixin],
     components: {
-      ElForm,
-      ElFormItem,
-      ElButton,
-      ElInput,
       PasswordInput
     },
     data () {

@@ -3,13 +3,6 @@ extends ../../common/jade/_base
 block meta
   meta(name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,initial-scale=1")
   +favicon()
-  +meta-seo()
-
-//- block libcss
-
-block css
-  +element-ui-css()
-  link(rel="stylesheet" href="/static/css/mobile-layout1/index.css")
 
 mixin content ()
   div(id="container")
@@ -22,5 +15,3 @@ mixin content ()
 block main
   #root
     +content()
-block js
-    script(src="/static/js/mobile-layout1/index.js")

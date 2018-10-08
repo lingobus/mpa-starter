@@ -1,12 +1,7 @@
 /* eslint-disable */
 import { pageInit } from 'utils/_page-common.js'
+import './index.styl'
 
-import ElTabs from 'element-ui/lib/tabs'
-import ElTabPane from 'element-ui/lib/tab-pane'
-import ElForm from 'element-ui/lib/form'
-import ElFormItem from 'element-ui/lib/form-item'
-import ElButton from 'element-ui/lib/button'
-import ElInput from 'element-ui/lib/input'
 import PasswordInput from 'components/password-input/index.vue'
 import api from 'api/_login.api.js'
 import MessageMixin from "mixin/message"
@@ -18,12 +13,6 @@ pageInit ({
     name: 'ResetPassword',
     mixins: [MessageMixin],
     components: {
-      ElTabs,
-      ElTabPane,
-      ElForm,
-      ElFormItem,
-      ElButton,
-      ElInput,
       PasswordInput,
     },
     data () {

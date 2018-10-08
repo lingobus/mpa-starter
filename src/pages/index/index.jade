@@ -2,13 +2,6 @@ extends ../../common/jade/_base
 
 block meta
   +favicon()
-  +meta-seo()
-
-//- block libcss
-
-block css
-  +element-ui-css()
-  link(rel="stylesheet" href="/static/css/index/index.css")
 
 mixin content ()
   .content
@@ -71,5 +64,3 @@ mixin content ()
 block main
   #root
     +content()
-block js
-    script(src="/static/js/index/index.js")

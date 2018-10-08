@@ -1,45 +1,42 @@
 //- Base template for all pages that
 //- need vue,vuex,vue-router,vue-i18n, axios and moment
-include _global-vars
 include _global-mixins
 include ../compound-utils/i18n/index.jade
 
 doctype html
-block vars
-  -var bodyClass=""
-  -var htmlClass=""
-
-html(class="#{htmlClass}")
+html
   head
     meta(content="charset=utf-8")
+    +meta-seo()
     block meta
     +i18nInit()
     block script
-    block title
-      title #{websiteTitle}
     block libcss
+      <link rel="stylesheet" href="/static/common/lib/element-ui@2.4.8/theme-chalk.css">
     block css
     block headjs
 
-  body(class="#{bodyClass}")
+  body
     block main
-    block before-libjs
     block libjs
       //- remember to add externals in bin/config.js when add new lib
-      if isdev
-        script(src="/static/js/lib/vue.2.2.6.js")
-        script(src="/static/js/lib/vue-router.2.7.0.js")
-        script(src="/static/js/lib/vue-i18n.6.1.1.js")
-        script(src="/static/js/lib/vuex.2.3.1.js")
-        script(src="/static/js/lib/axios.0.16.1.js")
-        script(src="/static/js/lib/moment.2.18.1.js")
-        script(src="/static/js/lib/moment-timezone-with-data.0.5.13.min.js")
-      else
-        script(src="/static/js/lib/vue.2.2.6.min.js")
-        script(src="/static/js/lib/vue-router.2.7.0.min.js")
-        script(src="/static/js/lib/vue-i18n.6.1.1.min.js")
-        script(src="/static/js/lib/vuex.2.3.1.min.js")
-        script(src="/static/js/lib/axios.0.16.1.min.js")
-        script(src="/static/js/lib/moment.2.18.1.min.js")
-        script(src="/static/js/lib/moment-timezone-with-data.0.5.13.min.js")
+      |<% if (isdev) { %>
+      script(src="/static/common/lib/axios@0.18.0/axios.js")
+      script(src="/static/common/lib/lodash@4.17.10/lodash.js")
+      script(src="/static/common/lib/moment@2.22.2/moment.js")
+      script(src="/static/common/lib/vue-i18n@8.1.0/vue-i18n.js")
+      script(src="/static/common/lib/vue-router@3.0.1/vue-router.js")
+      script(src="/static/common/lib/vue@2.5.7/vue.js")
+      script(src="/static/common/lib/vuex@3.0.1/vuex.js")
+      script(src="/static/common/lib/element-ui@2.4.8/element-ui.js")
+      |<% } else { %>
+      script(src="/static/common/lib/axios@0.18.0/axios.min.js")
+      script(src="/static/common/lib/lodash@4.17.10/lodash.min.js")
+      script(src="/static/common/lib/moment@2.22.2/moment.min.js")
+      script(src="/static/common/lib/vue-i18n@8.1.0/vue-i18n.min.js")
+      script(src="/static/common/lib/vue-router@3.0.1/vue-router.min.js")
+      script(src="/static/common/lib/vue@2.5.7/vue.min.js")
+      script(src="/static/common/lib/vuex@3.0.1/vuex.min.js")
+      script(src="/static/common/lib/element-ui@2.4.8/element-ui.js")
+      |<% } %>
     block js

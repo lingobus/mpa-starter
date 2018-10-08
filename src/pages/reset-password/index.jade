@@ -2,13 +2,6 @@ extends ../../common/jade/_base
 
 block meta
   +favicon()
-  +meta-seo()
-
-//- block libcss
-
-block css
-  +element-ui-css()
-  link(rel="stylesheet" href="/static/css/reset-password/index.css")
 
 mixin content ()
   - var b = 'reset-password'
@@ -65,5 +58,3 @@ mixin content ()
 block main
   #root
     +content()
-block js
-    script(src="/static/js/reset-password/index.js")

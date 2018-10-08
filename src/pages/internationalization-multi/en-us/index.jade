@@ -2,19 +2,6 @@ extends ../../../common/jade/_base
 
 block meta
   +favicon()
-  +analytics()
-  +meta-seo()
-  if useLs
-    if isdev
-      include ../../../common/jade/_seed
-    else
-      include ../../../common/jade/_seed-min
-
-//- block libcss
-
-block css
-  +element-ui-css()
-  link(rel="stylesheet" href="/static/css/internationalization-multi/en-us/index.css")
 
 mixin content ()
   center
@@ -23,5 +10,3 @@ mixin content ()
 block main
   #root
     +content()
-block js
-    script(src="/static/js/internationalization-multi/en-us/index.js")

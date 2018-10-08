@@ -1,48 +1,61 @@
-const url = require('url')
 const router = require('express').Router()
-
-const defaultLang = 'en-us'
+const Settings = require('../common/settings.js').DEFAULT_SEO
+const DEFAULT_SEO = Settings.DEFAULT_SEO
+const DEFAULT_LANG = Settings.DEFAULT_LANG
 
 // 不同语言渲染同一个jade模板
 const singleTemplatePages = [
-  'internationalization'
+  {
+    path: '/internationalization',
+    template: 'internationalization',
+    i18n: {
+      "en-US": {
+        "title": "A MPA Vue.js Project(Text in template can be crawled by search engines)",
+      },
+      "zh-CN": {
+        "title": "多页面Vue.js工程(模板中的文本可以被搜索引擎抓取)",
+      },
+    }
+  }
 ]
 
 singleTemplatePages.forEach(page => {
   function renderPage (res, page, locale) {
-    res.locals.locale = formatLocale(locale)
-    res.render(page + '/index')
+    const l = formatLocale(locale)
+    res.render(page.template, Object.assign({}, DEFAULT_SEO, { l }, page.i18n[l], page.locals))
   }
 
   // 路径中有locale以路径为准
-  router.get("/:locale/" + page, function(req, res, next){
+  router.get("/:locale" + page.path, function(req, res, next){
     renderPage(res, page, req.params.locale)
   })
 
   // 路径中没有locale以cookie为准
-  router.get('/' + page, function (req, res, next) {
+  router.get(page.path, function (req, res, next) {
     renderPage(res, page, req.cookies.locale || defaultLang)
   })
 })
 
 // 不同语言渲染不同jade模板
 const multiTemplatePages = [
-  'internationalization-multi'
+  {
+    path: '/internationalization-multi',
+    template: 'internationalization-multi',
+  }
 ]
 
 multiTemplatePages.forEach(page => {
   function renderPage (res, page, locale) {
-    res.locals.locale = formatLocale(locale)
-    res.render(page + '/' + locale.toLowerCase() + '/index')
+    res.render(page.template + '/' + locale, Object.assign({}, DEFAULT_SEO, { locale: formatLocale(locale) }, page.locals))
   }
 
   // 路径中有locale以路径为准
-  router.get("/:locale/" + page, function(req, res, next){
+  router.get("/:locale" + page.path, function(req, res, next){
     renderPage(res, page, req.params.locale)
   })
 
   // 路径中没有locale以cookie为准
-  router.get('/' + page, function (req, res, next) {
+  router.get(page.path, function (req, res, next) {
     renderPage(res, page, req.cookies.locale || defaultLang)
   })
 })

@@ -15,11 +15,9 @@ mixin paginator()
 
 mixin basic-operations()
   el-tooltip(content="Edit", placement="left-start", :open-delay="600")
-    el-button(size="mini", @click="handleEdit(scope.row)", type="primary")
-      fa-icon(name="edit")
+    el-button(size='mini', @click="handleEdit(scope.row)", type="primary", icon="el-icon-edit")
   el-tooltip(content="Delete", placement="left-start", :open-delay="600")
-    el-button(size="mini", @click="handleDelete(scope.row)", type="danger")
-      fa-icon(name="trash")
+    el-button(size='mini', @click="handleDelete(scope.row)", type="danger", icon="el-icon-delete")
 
 .search
   block querybar
@@ -31,7 +29,7 @@ mixin basic-operations()
     el-table.table(:data="tableData", v-loading="loading")
       block table-columns
       el-table-column(label="Operations")
-        template(scope)
+        template(slot-scope="scope")
           el-button-group.table-operations
             block custom-operation
             +basic-operations()

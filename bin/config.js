@@ -4,11 +4,16 @@ var path = require('path')
 var prettyjson = require('prettyjson')
 var buildPath = '../build'
 
+const env = process.env.NODE_ENV === 'development' ? 'dev' : 'prod'
+
 const envconfigs = {
+  port: 8080,
   paths: {
     root: path.resolve(__dirname, '..'),
     src: path.resolve(__dirname, '../src'),
     build: path.resolve(__dirname, buildPath),
+    assetsRoot: path.resolve(__dirname, buildPath, env),
+    assetsPublicPath: '/static/',
   },
   externals: {
     'axios': 'axios',
@@ -16,7 +21,9 @@ const envconfigs = {
     'vue': 'Vue',
     'vue-router': 'VueRouter',
     'vue-i18n': 'VueI18n',
-    'vuex': 'Vuex'
+    'vuex': 'Vuex',
+    'element-ui': 'Element',
+    'lodash': 'lodash',
   },
   alias: {
     '@': path.resolve(__dirname, '../src'),
@@ -30,26 +37,9 @@ const envconfigs = {
     "fonts": path.resolve(__dirname, '../src/common/fonts'),
     "common": path.resolve(__dirname, '../common'),
   },
-  prod: {
-    env: {
-      NODE_ENV: '"production"'
-    },
-    port: 8080,
-    assetsRoot: path.resolve(__dirname, buildPath, 'prod'),
-    assetsPublicPath: '/static/',
-  },
-  dev: {
-    env: {
-      NODE_ENV: '"development"'
-    },
-    port: 8080,
-    assetsRoot: path.resolve(__dirname, buildPath, 'dev'),
-    assetsPublicPath: '/static/',
-  },
   imgHashLength: 7,
   imgReg: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
 }
-const env = process.env.NODE_ENV === 'development' ? 'dev' : 'prod'
 console.log('Enviroment Configuration:'.magenta.bold)
-console.log(prettyjson.render(envconfigs[env]))
+console.log(prettyjson.render(envconfigs))
 module.exports = envconfigs

@@ -1,17 +1,34 @@
-var webpack = require('webpack')
-var path = require('path')
-var utils = require('./utils.js')
-var config = require('./config.js')
-
+const webpack = require('webpack')
+const path = require('path')
+const utils = require('./utils.js')
+const config = require('./config.js')
 const env = process.env.NODE_ENV === 'development' ? 'dev' : 'prod'
+
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const imageLoader = utils.getImageLoader(env)
 const fontLoader = utils.getFontsLoader(env)
-const lessLoader = utils.getLessLoader(env)
+const jadeLoader = { test: /\.jade$/, loader: 'jade-loader' }
+
+const stylusLoader = {
+  test: /\.styl$/,
+  loader: ExtractTextPlugin.extract({
+    fallback: "style-loader",
+    use: ["css-loader", 'stylus-loader']
+  })
+}
+
+const cssLoader = {
+  test: /\.css$/,
+  loader: ExtractTextPlugin.extract({
+    fallback: "style-loader",
+    use: "css-loader"
+  })
+}
+
 const vueLoader = utils.getVueLoader(env, {
-  loaders: {
-    i18n: '@kazupon/vue-i18n-loader'
-  },
   preLoaders: {
     jade: 'jade-deps-loader'
   }
@@ -25,74 +42,46 @@ const jsLoader = utils.getJsLoader(/\.jsx?$/, {
   }
 })
 
-var stylusLoader = utils.getStylusLoaderMaybeWithPlugin(false, env, env)
-const jsConfig = {
-  name: ' JavaScript '.yellow.bold.inverse,
-  target: 'web',
-  context: config.paths.root,
-  output: {
-    path: config[env].assetsRoot,
-    filename: env == 'dev' ? '[name].js' : '[name]-[chunkhash].js',
-    publicPath: config[env].assetsPublicPath
-  },
-  entry: utils.getEntries(['.js'], {
-    relativePublicPath: 'js/',
-  }),
-  resolve: {
-    extensions: ['.js'],
-    alias: config.alias
-  },
-  module: {
-    rules: [{
-      test: /\.css$/,
-      loader: "style-loader!css-loader"
-    },imageLoader, fontLoader, jsLoader, vueLoader, stylusLoader, lessLoader]
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    }),
-    utils.getCopyAssetsPlugin(env),
-  ]
+function getBaseConf (params) {
+  const outputName = params.outputName // js output path + name
+  const entryPath = params.entryPath // js entry path
+  const jadeTemplate = entryPath.substring(0, params.entryPath.lastIndexOf('.')) + '.jade'
+  const htmlOutput = outputName.substring(0, params.entryPath.lastIndexOf('.')) + '.ejs'
+  const entry = {}
+  entry[outputName] = entryPath
+  return {
+    name: ' JavaScript '.yellow.bold.inverse,
+    target: 'web',
+    context: config.paths.root,
+    output: {
+      path: config.paths.assetsRoot,
+      filename: env == 'dev' ? '[name].js' : '[name].[chunkhash].js',
+      publicPath: config.paths.assetsPublicPath
+    },
+    entry,
+    externals: config.externals,
+    resolve: {
+      alias: config.alias
+    },
+    module: {
+      rules: [cssLoader, imageLoader, fontLoader, jsLoader, vueLoader, stylusLoader, jadeLoader]
+    },
+    plugins: [
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      }),
+      new ExtractTextPlugin(env == 'dev' ? '[name].css' : '[name].[contenthash].css'),
+      new HtmlWebpackPlugin({
+        filename: htmlOutput,
+        template: jadeTemplate,
+        alwaysWriteToDisk: true,
+      }),
+      new CopyWebpackPlugin([{
+        from: path.join(config.paths.src, 'common/lib'),
+        to: path.join(config.paths.assetsRoot, 'common/lib')
+      }])
+    ]
+  }
 }
 
-//stylus
-var stylusLoaderAndPlugins = utils.getStylusLoaderMaybeWithPlugin(true, env)
-const stylusConfig = {
-  name: ' Stylesheet '.cyan.bold.inverse,
-  target: 'web',
-  context: config.paths.root,
-  entry: utils.getEntries(['.styl'], {
-    relativePublicPath: 'css/'
-  }),
-  output: {
-    path: config[env].assetsRoot,
-    filename: env == 'dev' ? '[name].css' : '[name]-[chunkhash].css',
-    publicPath: config[env].assetsPublicPath
-  },
-  resolve: {
-    modules: ["node_modules"]
-  },
-  module: {
-    rules: [imageLoader, fontLoader, stylusLoaderAndPlugins.loader]
-  },
-  plugins: stylusLoaderAndPlugins.plugins
-}
-
-const jadeConfig = {
-  name: ' Jade '.cyan.bold.inverse,
-  target: 'web',
-  entry: config.paths.root + '/bin/tmp.js',
-  output: {
-    path: config.paths.build,
-    filename: 'tmp.js'
-
-  },
-  plugins: [utils.getCopyJadePlugin(env)]
-}
-
-module.exports = {
-  jsConfig,
-  stylusConfig,
-  jadeConfig,
-}
+module.exports = getBaseConf

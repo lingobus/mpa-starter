@@ -6,18 +6,18 @@ const morgan = require('morgan')
 const useragent = require('express-useragent')
 
 const env = process.env.NODE_ENV === 'development' ? 'dev' : 'prod'
-const utils = require('./bin/utils.js')
-// const proxy = require('./proxy.js')
 const proxy = require('./proxy.js')
 const config = require('./bin/config.js')
 const PackageConfig = require('./package.json')
-const staticPath = config[env].assetsRoot
+const staticPath = config.paths.assetsRoot
+const DEFAULT_SEO = require('./common/settings.js').DEFAULT_SEO
+
 console.log('Using Node %s'.green.bold, process.version)
 console.log(('Static Directory set to:\n  '.magenta.bold + staticPath).green)
 
-var app = express()
-app.set('views', config.paths.build + '/' + env + '/views/pages')
-app.set('view engine', 'jade')
+const app = express()
+app.set('views', config.paths.build + '/' + env + '/pages')
+app.set('view engine', 'ejs')
 
 if (env === 'dev') {
   console.log('Using Development Env Config'.cyan.inverse)
@@ -33,7 +33,6 @@ if (env === 'dev') {
   app.locals.isdev = false
   app.locals.pretty = false
 }
-app.locals.env = env
 
 if (env === 'dev') {
   app.use(require('./mock'))
@@ -57,18 +56,16 @@ require('./controllers')(app)
 /* 404 */
 app.use(function(req, res) {
   res.status(404);
-  res.render('404/index')
+  res.render('404', DEFAULT_SEO)
 })
 
 /* 500 */
 app.use(function(error, req, res, next) {
   res.status(500);
-  res.render('500/index', {
-    error: error
-  })
+  res.render('500', Object.assign({}, DEFAULT_SEO, { error: error }))
 })
 
-const port = config[env].port
+const port = config.port
 app.listen(port, function() {
   console.log(PackageConfig.name + ' started on port ' + String(port).red.bold + '...')
 })

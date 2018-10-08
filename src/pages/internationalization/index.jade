@@ -2,29 +2,11 @@ extends ../../common/jade/_base
 
 block meta
   +favicon()
-  +meta-seo()
-
-//- block libcss
-
-block css
-  +element-ui-css()
-  link(rel="stylesheet" href="/static/css/internationalization/index.css")
 
 mixin content ()
-  -
-    var messages = {
-      'en-US': {
-        title: "A MPA Vue.js Project(Text in template can be crawled by search engines)"
-      },
-      'zh-CN': {
-        title: '多页面Vue.js工程(模板中的文本可以被搜索引擎抓取)'
-      }
-    }[locals.locale]
   center
-    h1 #{messages.title}
+    h1 <%= title %>
     component-i18n
 block main
   #root
     +content()
-block js
-    script(src="/static/js/internationalization/index.js")

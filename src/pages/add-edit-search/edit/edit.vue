@@ -31,11 +31,6 @@
 
 <script>
 
-import ElInput from 'element-ui/lib/input'
-import ElForm from 'element-ui/lib/form'
-import ElFormItem from 'element-ui/lib/form-item'
-import ElButton from 'element-ui/lib/button'
-
 import MessageMixin from "mixin/message"
 import validationRules from '../validation-rules.js'
 import api from 'api/_add-edit-search.api.js'
@@ -44,10 +39,6 @@ export default {
   name: 'Edit',
   mixins: [MessageMixin],
   components: {
-    ElInput,
-    ElForm,
-    ElFormItem,
-    ElButton,
   },
   data () {
     return {

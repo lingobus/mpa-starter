@@ -1,14 +1,3 @@
-<i18n>
-{
-  "en-US": {
-    "greeting": "Hello Vue(Text in component can't be crawled by search engines)"
-  },
-  "zh-CN": {
-    "greeting": "你好 Vue(组件中的文本不能被搜索引擎抓取)"
-  }
-}
-</i18n>
-
 <template lang="jade">
   .component-i18n
     p {{$t('greeting')}}
@@ -26,14 +15,22 @@ p
 </style>
 
 <script>
-  import ElButton from 'element-ui/lib/button'
   import { changeLocale } from 'compound-utils/i18n'
 
   export default {
+    i18n: {
+      messages: {
+        "en-US": {
+          "greeting": "Hello Vue(Text in component can't be crawled by search engines)"
+        },
+        "zh-CN": {
+          "greeting": "你好 Vue(组件中的文本不能被搜索引擎抓取)"
+        }
+      }
+    },
     name: 'component-i18n',
     mixins: [],
     components: {
-      ElButton
     },
     mounted () {
     },
