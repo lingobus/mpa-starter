@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const Settings = require('../common/settings.js').DEFAULT_SEO
+const Settings = require('../common/settings.js')
 const DEFAULT_SEO = Settings.DEFAULT_SEO
 const DEFAULT_LANG = Settings.DEFAULT_LANG
 
@@ -32,7 +32,7 @@ singleTemplatePages.forEach(page => {
 
   // 路径中没有locale以cookie为准
   router.get(page.path, function (req, res, next) {
-    renderPage(res, page, req.cookies.locale || defaultLang)
+    renderPage(res, page, req.cookies.locale || DEFAULT_LANG)
   })
 })
 
@@ -56,7 +56,7 @@ multiTemplatePages.forEach(page => {
 
   // 路径中没有locale以cookie为准
   router.get(page.path, function (req, res, next) {
-    renderPage(res, page, req.cookies.locale || defaultLang)
+    renderPage(res, page, req.cookies.locale || DEFAULT_LANG)
   })
 })
 
