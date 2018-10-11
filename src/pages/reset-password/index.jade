@@ -35,6 +35,10 @@ mixin content ()
         el-button(type="primary", @click="sendCodeByEmail") Send Verification Code
       <br><br>
       el-form(ref="pswdForm", :model="user")
+        input(
+          style="display: none",
+          name="username",
+          autocomplete="username")
         el-form-item(
           prop="pswd",
           :rules="rules.pswd",

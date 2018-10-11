@@ -6,10 +6,20 @@
     )
       el-input(
         v-model="user.phone",
-        name="phone",
-        type="phone",
+        name="mobile",
+        type="text",
         auto-complete="phone",
         placeholder="Phone",
+      )
+    el-form-item(
+      prop="username",
+    )
+      el-input(
+        v-model="user.username",
+        name="username",
+        type="text",
+        auto-complete="username",
+        placeholder="User Name",
       )
     el-form-item(
       prop="pswd",
@@ -34,7 +44,7 @@
       prop="code",
     )
       el-input(v-model="user.code", placeholder="Verification code")
-    el-button.login-btn(type="primary", @click="handlePhoneRegister") Login
+    el-button.login-btn(type="primary", @click="handlePhoneRegister") Register
 </template>
 
 <style lang="stylus" scoped>
@@ -60,6 +70,7 @@ export default {
   data () {
     return {
       user: {
+        username: '',
         phone: '',
         pswd: '',
         repawd: '',

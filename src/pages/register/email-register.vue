@@ -7,9 +7,19 @@
       el-input(
         v-model="user.email",
         name="email",
-        type="email",
+        type="text",
         auto-complete="email",
         placeholder="Email",
+      )
+    el-form-item(
+      prop="username",
+    )
+      el-input(
+        v-model="user.username",
+        name="username",
+        type="text",
+        auto-complete="username",
+        placeholder="User Name",
       )
     el-form-item(
       prop="pswd",
@@ -58,6 +68,7 @@ export default {
   data () {
     return {
       user: {
+        username: '',
         email: '',
         pswd: '',
         repswd: '',
