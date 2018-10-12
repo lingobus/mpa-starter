@@ -3,7 +3,7 @@ const Settings = require('../common/settings.js')
 const DEFAULT_SEO = Settings.DEFAULT_SEO
 const DEFAULT_LANG = Settings.DEFAULT_LANG
 
-// 不同语言渲染同一个jade模板
+// 不同语言渲染同一个pug模板
 const singleTemplatePages = [
   {
     path: '/internationalization',
@@ -36,7 +36,7 @@ singleTemplatePages.forEach(page => {
   })
 })
 
-// 不同语言渲染不同jade模板
+// 不同语言渲染不同pug模板
 const multiTemplatePages = [
   {
     path: '/internationalization-multi',

@@ -2,9 +2,6 @@ var ora = require('ora')
 var webpack = require('webpack')
 var utils = require('./utils.js')
 const getConfig = require('./webpack.prod.conf')
-// console.log('================webpack.prod.conf=====================')
-// console.log(JSON.stringify(webpackConfigs, null, 2))
-// console.log('=============================================')
 
 const allConfigs = utils.getEntries().map(entry => getConfig(entry))
 

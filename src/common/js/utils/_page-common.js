@@ -9,7 +9,7 @@ export function pageInit (params = {}) {
     vue, // 必需。创建vue实例需要的参数
   } = params
 
-  $LB.query = parseQuery(location.search)
+  window.$LB.query = parseQuery(location.search)
 
   i18nInit({vue, customI18N})
 

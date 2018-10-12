@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
   el-form.email-login(ref="form", :model="user")
     el-form-item(
       prop="email",

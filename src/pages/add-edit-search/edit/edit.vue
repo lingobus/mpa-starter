@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
   el-form(ref="form", :model="user")
     .edit-btn-wrapper
       el-button(v-if="!editing", type="primary", @click="handleEdit") Edit

@@ -1,7 +1,7 @@
-var webpack = require('webpack')
+const webpack = require('webpack')
 const getConfig = require('./webpack.dev.conf')
-var config = require('./config.js')
-var utils = require('./utils.js')
+const config = require('./config.js')
+const utils = require('./utils.js')
 
 module.exports = function (app) {
   let entrys = utils.getEntries() // compile all entries by default
@@ -9,8 +9,7 @@ module.exports = function (app) {
   if (process.env.PAGE) {
     entrys = utils.getEntries().filter(entry => {
       const pages = process.env.PAGE.split(',')
-      const entryName = entry.outputName.split('/')[1]
-      return !!pages.find(p => entryName === p)
+      return !!pages.find(p => p === entry.name)
     })
     if (!entrys.length) {
       console.log(('Entry ' + process.env.PAGE + ' not found').red.inverse)
@@ -18,16 +17,21 @@ module.exports = function (app) {
     }
   }
 
-  entrys.forEach(entry => {
-    const compiler = webpack(getConfig(entry))
-    app.use(require("webpack-dev-middleware")(compiler, {
-      // noInfo: false,
-      publicPath: config.paths.assetsPublicPath,
-      log: console.log,
-      stats: {
-        colors: true,
-        chunks: false,
-      }
-    }))
+  const compiler = webpack(entrys.map(getConfig))
+  app.use(require("webpack-dev-middleware")(compiler, {
+    publicPath: config.paths.assetsPublicPath,
+    log: console.log,
+    stats: {
+      colors: true,
+      chunks: false,
+    }
+  }))
+
+  const hotMiddleware = require("webpack-hot-middleware")(compiler, {
+    log: console.log,
+    path: '/__webpack_hmr',
+    heartBeat: 5 * 1000
   })
+
+  app.use(hotMiddleware)
 }

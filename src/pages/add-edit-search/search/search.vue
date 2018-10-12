@@ -1,5 +1,5 @@
-<template lang="jade">
-  extends ../../../common/mixin/search/index.jade
+<template lang="pug">
+  extends ../../../common/mixin/search/index
 
   block querybar-form-items
     el-form-item(

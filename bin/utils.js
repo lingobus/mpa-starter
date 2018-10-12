@@ -15,10 +15,13 @@ function getEntries(extensions, options) {
     settings.SUPPORTED_LANGS.forEach(lang => {
       files = files.concat(glob.sync(pagesPath + "/*/" + lang + "/index" + ext, options)) // for example: page/home/en-us/index.js
     })
+
     files.forEach(function(filepath) {
+      const outputName = path.relative(srcPath, filepath.substring(0, filepath.lastIndexOf('.')))
       const entry = {
+        name: outputName.split('/')[1],
         entryPath: filepath,
-        outputName: path.relative(srcPath, filepath.substring(0, filepath.lastIndexOf('.')))
+        outputName,
       }
       res.push(entry)
     })
@@ -33,55 +36,3 @@ function getEntries(extensions, options) {
   return res
 }
 exports.getEntries = getEntries
-
-const ImageNames = {
-  dev: '[path][name].[ext]',
-  prod: '[path][name].[hash:7].[ext]'
-}
-exports.getImageLoader = function(env, limit) {
-  return {
-    test: config.imgReg,
-    loader: 'url-loader',
-    query: {
-      emitFile: true,
-      context: path.join(config.paths.src),
-      limit: limit || 10000,
-      name: ImageNames[env]
-    }
-  }
-}
-
-const FontNames = {
-  dev: 'common/fonts/[name].[ext]',
-  prod: 'common/fonts/[name].[hash:7].[ext]'
-}
-
-exports.getFontsLoader = function(env, limit) {
-  return {
-    test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-    loader: 'url-loader',
-    query: {
-      limit: limit || 10000,
-      name: FontNames[env]
-    }
-  }
-}
-
-exports.getJsLoader = function(jsPattern, opts) {
-  const config = {
-    test: jsPattern || /\.js$/,
-    loader: 'babel-loader'
-  }
-  return Object.assign(config, opts)
-}
-
-exports.getVueLoader = function (env, options) {
-  const loader = {
-    test: /\.vue$/,
-    loader: 'vue-loader'
-  }
-  if (options) {
-    loader.options = options
-  }
-  return loader
-}

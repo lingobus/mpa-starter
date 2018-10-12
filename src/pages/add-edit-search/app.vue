@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
   center.main
     router-view
 </template>

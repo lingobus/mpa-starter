@@ -1,7 +1,6 @@
 //- Base template for all pages that
-//- need vue,vuex,vue-router,vue-i18n, axios and moment
 include _global-mixins
-include ../compound-utils/i18n/index.jade
+include ../compound-utils/i18n/index
 
 doctype html
 html
@@ -9,7 +8,7 @@ html
     meta(content="charset=utf-8")
     +meta-seo()
     block meta
-    +i18nInit()
+    +i18nMixin()
     block script
     block libcss
       <link rel="stylesheet" href="/static/common/lib/element-ui@2.4.8/theme-chalk.css">

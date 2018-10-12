@@ -1,12 +1,12 @@
-extends ../../common/jade/_base
+extends ../../common/pug/_base
 
 block meta
   +favicon()
 
 mixin content ()
   - var b = 'register'
-  div(class="#{b}")
-    div(class="#{b}__others")
+  div(class=b)
+    div(class=b+'__others')
       el-button(@click="handleWechatLogin") Wechat
       el-button(@click="handleFacebookLogin") Facebook
       | &nbsp;&nbsp;&nbsp;&nbsp;

@@ -1,11 +1,11 @@
-extends ../../common/jade/_base
+extends ../../common/pug/_base
 
 block meta
   +favicon()
 
 mixin content ()
   - var b = 'login'
-  div(class="#{b}")
+  div(class=b)
     el-form(ref="form", :model="user")
       el-form-item(
         prop="account",
@@ -31,4 +31,5 @@ mixin content ()
 
 block main
   #root
+    p sdgsdf
     +content()

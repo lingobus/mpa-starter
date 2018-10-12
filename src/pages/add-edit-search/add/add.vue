@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
   el-form(ref="form", :model="user")
     el-form-item(
       label="Name",

@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
   .password-input
     el-input(
       :value="value",

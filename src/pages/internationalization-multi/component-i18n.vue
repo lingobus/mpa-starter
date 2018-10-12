@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
   .component-i18n
     p {{$t('greeting')}}
     <br><br>

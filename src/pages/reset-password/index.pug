@@ -1,11 +1,11 @@
-extends ../../common/jade/_base
+extends ../../common/pug/_base
 
 block meta
   +favicon()
 
 mixin content ()
   - var b = 'reset-password'
-  center(class="#{b}")
+  center(class=b)
     el-tabs(v-model="activeTab")
       el-tab-pane(label="By phone", name="phone")
         el-form(ref="phoneForm", :model="user")
@@ -13,14 +13,13 @@ mixin content ()
             prop="phone",
             :rules="rules.phone",
           )
-            el-input(class="#{b}__phone-input",
+            el-input(
               name="phone_number",
               type="tel",
               auto-complete="tel",
               v-model="user.phone",
               placeholder="Phone")
         el-button(type="primary", @click="sendCodeByPhone") Send Verification Code
-
       el-tab-pane(label="By email", name="email")
         el-form(ref="emailForm", :model="user")
           el-form-item(

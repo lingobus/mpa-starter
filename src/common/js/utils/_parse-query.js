@@ -1,4 +1,5 @@
-import isEmpty from 'lodash/isEmpty'
+import _ from 'lodash'
+
 export default function parseQuery (query) {
   var res = {};
 
@@ -32,7 +33,7 @@ export default function parseQuery (query) {
  * @param {*} obj
  */
 export function encodeQuery(obj) {
-  if (isEmpty(obj)) return ''
+  if (_.isEmpty(obj)) return ''
   let res = ''
   for (let key in obj) {
     let k = encodeURIComponent(key.trim()), val

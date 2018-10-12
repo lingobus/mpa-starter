@@ -18,7 +18,7 @@ pageInit ({
     data () {
       return {
         user: {
-          account: '',
+          username: '',
           pswd: '',
         },
         rules: {

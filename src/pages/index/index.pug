@@ -1,4 +1,4 @@
-extends ../../common/jade/_base
+extends ../../common/pug/_base
 
 block meta
   +favicon()
@@ -58,7 +58,7 @@ mixin content ()
         },
       ]
     - for (var i = 0; i < data.length; i++)
-      a(href="#{data[i].path}") #{i+1}: #{data[i].text}
+      a(href=data[i].path)=`${i+1}: ${data[i].text}`
       <br>
 
 block main

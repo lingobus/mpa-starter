@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
   el-form.phone-login(ref="form", :model="user")
     el-form-item(
       prop="phone",
@@ -54,7 +54,6 @@
 
 <script>
 
-import IntTelInput from 'components/int-tel-input/index.vue'
 import PasswordInput from 'components/password-input/index.vue'
 import {validatePhone, validatePassword} from 'utils/_validator.js'
 import api from 'api/_login.api.js'
@@ -64,13 +63,12 @@ export default {
   name: 'phone-register',
   mixins: [MessageMixin],
   components: {
-    IntTelInput,
     PasswordInput,
   },
   data () {
     return {
       user: {
-        username: '',
+        username: 'sdfsdf',
         phone: '',
         pswd: '',
         repawd: '',

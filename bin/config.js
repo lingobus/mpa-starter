@@ -23,7 +23,7 @@ const envconfigs = {
     'vue-i18n': 'VueI18n',
     'vuex': 'Vuex',
     'element-ui': 'Element',
-    'lodash': 'lodash',
+    'lodash': '_',
   },
   alias: {
     '@': path.resolve(__dirname, '../src'),

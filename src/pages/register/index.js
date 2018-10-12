@@ -4,6 +4,7 @@ import './index.styl'
 
 import EmailRegister from './email-register.vue'
 import PhoneRegister from './phone-register.vue'
+import MessageMixin from "mixin/message"
 
 const TYPE_PHONE = '1'
 const TYPE_EMAIL = '2'
@@ -11,6 +12,7 @@ const TYPE_EMAIL = '2'
 pageInit ({
   vue: {
     name: 'Register',
+    mixins: [MessageMixin],
     components: {
       EmailRegister,
       PhoneRegister,
@@ -29,7 +31,6 @@ pageInit ({
     },
     methods: {
       handleWechatLogin () {
-
       },
       handleFacebookLogin () {
 

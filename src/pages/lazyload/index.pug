@@ -1,11 +1,11 @@
-extends ../../common/jade/_base
+extends ../../common/pug/_base
 
 block meta
   +favicon()
 
 mixin content ()
   - var b = 'block'
-  center(class="#{b}")
+  center(class=b)
     - for (var i = 0; i < 100; i++) {
     img(src=require('./img/teacher-blur420_227.jpg'), data-src=require('./img/video-1.png'), width="420", height="227")
     <br><br><br><br>
