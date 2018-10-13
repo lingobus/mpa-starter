@@ -17,7 +17,17 @@ module.exports = function (app) {
     }
   }
 
-  const compiler = webpack(entrys.map(getConfig))
+  const configs = entrys.map(entry => {
+    const c = getConfig(entry)
+    c.plugins.push(reloadHtml)
+    return c
+  })
+
+  console.log("=====================================")
+  console.log(configs)
+  console.log("=====================================")
+
+  const compiler = webpack(configs)
   app.use(require("webpack-dev-middleware")(compiler, {
     publicPath: config.paths.assetsPublicPath,
     log: console.log,
@@ -34,4 +44,14 @@ module.exports = function (app) {
   })
 
   app.use(hotMiddleware)
+
+  function reloadHtml () {
+    this.plugin('compilation', function (compilation) {
+      compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
+        console.log('publish reloadffffmmmm'.red.inverse)
+        hotMiddleware.publish({ action: 'reload' })
+        cb()
+      })
+    })
+  }
 }

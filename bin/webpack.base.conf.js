@@ -4,7 +4,6 @@ const config = require('./config.js')
 const env = process.env.NODE_ENV === 'development' ? 'dev' : 'prod'
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
@@ -26,24 +25,6 @@ const fontLoader = {
     limit: 10000,
     name: env === 'dev' ? 'common/fonts/[name].[ext]' : 'common/fonts/[name].[hash:7].[ext]'
   }
-}
-
-const stylusLoader = {
-  test: /\.styl(us)?$/,
-  loader: ExtractTextPlugin.extract({
-    fallback: "vue-style-loader",
-    use: ["css-loader", 'stylus-loader']
-  })
-}
-
-const cssLoader = {
-  test: /\.css$/,
-  loader: ExtractTextPlugin.extract({
-    fallback: "vue-style-loader",
-    use: [
-      "css-loader",
-    ]
-  })
 }
 
 const vueLoader = {
@@ -99,7 +80,7 @@ function getBaseConf (params) {
       alias: config.alias
     },
     module: {
-      rules: [cssLoader, imageLoader, fontLoader, jsLoader, vueLoader, stylusLoader, pugLoader]
+      rules: [imageLoader, fontLoader, jsLoader, vueLoader, pugLoader]
     },
     plugins: [
       new webpack.DefinePlugin({
