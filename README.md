@@ -6,7 +6,7 @@
 
 ``` bash
 # install dependencies
-npm install
+yarn or npm install
 
 # serve with hot reload
 npm start
