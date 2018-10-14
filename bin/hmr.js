@@ -2,6 +2,7 @@ const webpack = require('webpack')
 const getConfig = require('./webpack.dev.conf')
 const config = require('./config.js')
 const utils = require('./utils.js')
+const merge = require('webpack-merge')
 
 module.exports = function (app) {
   let entrys = utils.getEntries() // compile all entries by default
@@ -17,15 +18,25 @@ module.exports = function (app) {
     }
   }
 
-  const configs = entrys.map(entry => {
-    const c = getConfig(entry)
-    c.plugins.push(reloadHtml)
-    return c
+  const configs = entrys.map(params => {
+    const entry = {}
+    // Multi-compiler mode need a name for webpack-hot-middleware to make sure bundles don't process each other's updates.
+    // https://github.com/webpack-contrib/webpack-hot-middleware/tree/v2.24.3#multi-compiler-mode
+    entry[params.outputName] = [`./bin/hot-client.js?name=${params.name}&path=/__webpack_hmr&timeout=20000&reload=true`]
+    const hmrConfig = {
+      entry,
+      plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
+        pugHotReload,
+      ]
+    }
+    return merge(getConfig(params), hmrConfig)
   })
 
-  console.log("=====================================")
-  console.log(configs)
-  console.log("=====================================")
+  // console.log("=====================================")
+  // console.log(configs)
+  // console.log("=====================================")
 
   const compiler = webpack(configs)
   app.use(require("webpack-dev-middleware")(compiler, {
@@ -45,10 +56,9 @@ module.exports = function (app) {
 
   app.use(hotMiddleware)
 
-  function reloadHtml () {
+  function pugHotReload () {
     this.plugin('compilation', function (compilation) {
       compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
-        console.log('publish reloadffffmmmm'.red.inverse)
         hotMiddleware.publish({ action: 'reload' })
         cb()
       })

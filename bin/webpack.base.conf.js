@@ -64,7 +64,7 @@ function getBaseConf (params) {
   const pugTemplate = entryPath.substring(0, params.entryPath.lastIndexOf('.')) + '.pug'
   const htmlOutput = outputName.substring(0, params.entryPath.lastIndexOf('.')) + '.ejs'
   const entry = {}
-  entry[outputName] = entryPath
+  entry[outputName] = [entryPath]
   return {
     name,
     target: 'web',
@@ -87,7 +87,6 @@ function getBaseConf (params) {
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
       }),
       new VueLoaderPlugin(),
-      new ExtractTextPlugin(env == 'dev' ? '[name].css' : '[name].[contenthash].css'),
       new HtmlWebpackPlugin({
         filename: htmlOutput,
         template: pugTemplate,

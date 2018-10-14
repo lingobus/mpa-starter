@@ -1,6 +1,6 @@
-# hello-world
+# Description
 
-> A Vue.js project
+> A full feature multi-page website starter
 
 ## Build Setup
 

@@ -31,6 +31,7 @@ var prodConf = {
     ]
   },
   plugins: [
+    new ExtractTextPlugin('[name].[contenthash].css'),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false

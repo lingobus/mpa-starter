@@ -18,6 +18,7 @@ html
   body
     block main
     block libjs
+      //- make large dependences external to speed up compilition and browser will cache these
       //- remember to add externals in bin/config.js when add new lib
       |<% if (isdev) { %>
       script(src="/static/common/lib/axios@0.18.0/axios.js")
