@@ -6,9 +6,9 @@
       :placeholder="placeholder",
       :type="type",
       :auto-complete="autocomplete",
-      @input="inputHandle",
+      @input="handleInput",
     )
-    el-button.input-toggle-type(type="text", @click="clickHandle")
+    el-button.input-toggle-type(type="text", @click="handleClick")
       img(:src="icon")
 </template>
 
@@ -32,7 +32,6 @@ export default {
       type: String,
       default: 'password',
     },
-    initialize: Boolean
   },
 
   data () {
@@ -42,9 +41,6 @@ export default {
   },
 
   watch: {
-    initialize (newValue) {
-      this.type = 'password'
-    }
   },
 
   computed: {
@@ -54,10 +50,10 @@ export default {
   },
 
   methods: {
-    inputHandle (value) {
+    handleInput (value) {
       this.$emit('input', value)
     },
-    clickHandle () {
+    handleClick () {
       this.type = this.type === 'text' ? 'password' : 'text'
     }
   }

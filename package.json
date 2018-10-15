@@ -5,20 +5,16 @@
   "main": "app.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development WEBPACK=css,html node ./bin/build.js",
-    "start": "cross-env HMR=true NODE_ENV=development WEBPACK=all babel-watch app.js",
-    "start-nohmr": "cross-env NODE_ENV=development babel-watch app.js",
-    "start-onlyjs": "cross-env HMR=true NODE_ENV=development WEBPACK=js babel-watch app.js",
-    "release": "cross-env NODE_ENV=production node ./bin/build.js",
-    "webpack-watch": "cross-env NODE_ENV=development webpack --watch --config ./bin/webpack.dev.conf.js"
+    "start": "cross-env HMR=true NODE_ENV=development WEBPACK=all node app.js",
+    "release": "cross-env NODE_ENV=production node ./bin/build.js"
   },
   "author": "zhangdaiyan <zhangdaiyan@vipkid.com.cn>",
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "6.26.3",
-    "babel-loader": "7.0.0",
-    "babel-preset-es2015": "6.24.1",
-    "babel-preset-stage-2": "6.24.1",
-    "babel-watch": "2.0.7",
+    "@babel/core": "7.1.2",
+    "@babel/plugin-transform-async-to-generator": "7.1.0",
+    "@babel/preset-env": "7.1.0",
+    "babel-loader": "8.0.4",
     "body-parser": "1.17.1",
     "colors": "1.1.2",
     "cookie-parser": "1.4.3",

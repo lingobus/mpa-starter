@@ -1,4 +1,8 @@
 {
-  "presets": ["es2015", "stage-2"],
-  "comments": false
+  "presets": [
+    "@babel/preset-env"
+  ],
+  "plugins": [
+    "@babel/plugin-transform-async-to-generator"
+  ]
 }
