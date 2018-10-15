@@ -9,7 +9,16 @@ const stylusLoader = {
   test: /\.styl(us)?$/,
   loader: ExtractTextPlugin.extract({
     fallback: "vue-style-loader",
-    use: ["css-loader", 'stylus-loader']
+    use: [
+      {
+        loader: 'css-loader',
+        options: {
+          importLoaders: 2 // https://github.com/webpack-contrib/css-loader/tree/v0.28.11#importloaders
+        }
+      },
+      'postcss-loader',
+      'stylus-loader',
+    ]
   })
 }
 
@@ -18,7 +27,13 @@ const cssLoader = {
   loader: ExtractTextPlugin.extract({
     fallback: "vue-style-loader",
     use: [
-      "css-loader",
+      {
+        loader: 'css-loader',
+        options: {
+          importLoaders: 1 // https://github.com/webpack-contrib/css-loader/tree/v0.28.11#importloaders
+        }
+      },
+      'postcss-loader',
     ]
   })
 }

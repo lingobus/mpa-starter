@@ -3,17 +3,15 @@ var glob = require('glob')
 var config = require('./config.js')
 var settings = require('../common/settings.js')
 
-function getEntries(extensions, options) {
-  options = options || {}
+function getEntries(extensions) {
   extensions = extensions || ['.js']
-  const verbose = options.verbose || true
   const srcPath = config.paths.src
   const pagesPath = srcPath + '/pages'
   const res = []
   extensions.forEach(ext => {
-    let files = glob.sync(pagesPath + "/*/index" + ext, options) // for example: page/home/index.js
+    let files = glob.sync(pagesPath + "/*/index" + ext) // for example: page/home/index.js
     settings.SUPPORTED_LANGS.forEach(lang => {
-      files = files.concat(glob.sync(pagesPath + "/*/" + lang + "/index" + ext, options)) // for example: page/home/en-us/index.js
+      files = files.concat(glob.sync(pagesPath + "/*/" + lang + "/index" + ext)) // for example: page/home/en-us/index.js
     })
 
     files.forEach(function(filepath) {
@@ -26,13 +24,15 @@ function getEntries(extensions, options) {
       res.push(entry)
     })
   })
-
-  if (verbose) {
-    console.log('Entries'.cyan.bold)
-    res.forEach(entry => {
-      console.log(entry.entryPath.yellow)
-    })
-  }
   return res
 }
+
+function printEntries(entries) {
+  console.log('Entries'.cyan.bold)
+  entries.forEach(entry => {
+    console.log(entry.entryPath.yellow)
+  })
+}
+
 exports.getEntries = getEntries
+exports.printEntries = printEntries

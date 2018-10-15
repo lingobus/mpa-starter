@@ -8,7 +8,7 @@ module.exports = function (app) {
   let entrys = utils.getEntries() // compile all entries by default
 
   if (process.env.PAGE) {
-    entrys = utils.getEntries().filter(entry => {
+    entrys = entrys.filter(entry => {
       const pages = process.env.PAGE.split(',')
       return !!pages.find(p => p === entry.name)
     })
@@ -17,6 +17,8 @@ module.exports = function (app) {
       return
     }
   }
+
+  utils.printEntries(entrys)
 
   const configs = entrys.map(params => {
     const entry = {}
