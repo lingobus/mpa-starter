@@ -1,10 +1,10 @@
 # Description
 
-> An advanced full feature multi-page website starter
+> An newest advanced full feature multi-page website starter
 
 ## Features
-1. webpack@3.5.4(webpack 4 coming soon)
-2. babel@7 with preset-env(using browserslist for browser compatibility)
+1. webpack@4.2.0
+2. babel 7 with preset-env(using browserslist for browser compatibility)
 3. pug(for vue template and html template)
 4. vue@2.5.7
 5. stylus(stylus -> postcss)

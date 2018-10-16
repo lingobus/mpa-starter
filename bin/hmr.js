@@ -59,11 +59,21 @@ module.exports = function (app) {
   app.use(hotMiddleware)
 
   function pugHotReload () {
-    this.plugin('compilation', function (compilation) {
-      compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
-        hotMiddleware.publish({ action: 'reload' })
-        cb()
+    const name = 'pug-hot-reload-plugin'
+    if (this.hooks) {  // for webpack 4
+      this.hooks.compilation.tap(name, function (compilation) {
+        compilation.hooks.htmlWebpackPluginAfterEmit.tapAsync(name, (data, cb) => {
+          hotMiddleware.publish({ action: 'reload' })
+          cb()
+        });
+      });
+    } else { // for webpack 3
+      this.plugin('compilation', function (compilation) {
+        compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
+          hotMiddleware.publish({ action: 'reload' })
+          cb()
+        })
       })
-    })
+    }
   }
 }

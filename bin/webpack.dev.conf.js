@@ -2,11 +2,10 @@
 const merge = require('webpack-merge')
 const getBaseConf = require('./webpack.base.conf')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-const WebpackNotifierPlugin = require('webpack-notifier')
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin')
 
-// Use extract-text-webpack-plugin will drop support for hmr, so use plain loader in development
-// https://github.com/webpack-contrib/extract-text-webpack-plugin#usage
+// Use mini-css-extract-plugin will drop support for hmr, so use style-loader loader in development
+// https://github.com/webpack-contrib/mini-css-extract-plugin/tree/v0.4.4#advanced-configuration-example
 const cssLoader = {
   test: /\.css$/,
   use: [
@@ -25,6 +24,7 @@ const stylusLoader = {
 }
 
 var devConf = {
+  mode: 'development',
   devtool: '#eval-source-map',
   watchOptions: {
     ignored: /node_modules/
@@ -38,7 +38,6 @@ var devConf = {
   plugins: [
     new HtmlWebpackHarddiskPlugin(),
     new FriendlyErrorsPlugin(),
-    new WebpackNotifierPlugin(),
   ]
 }
 

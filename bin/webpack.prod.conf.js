@@ -1,44 +1,30 @@
 var webpack = require('webpack')
 var merge = require('webpack-merge')
 var getBaseConf = require('./webpack.base.conf')
-var WebpackMd5Hash = require('webpack-md5-hash');
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-
-const stylusLoader = {
-  test: /\.styl(us)?$/,
-  loader: ExtractTextPlugin.extract({
-    fallback: "vue-style-loader",
-    use: [
-      {
-        loader: 'css-loader',
-        options: {
-          importLoaders: 2 // https://github.com/webpack-contrib/css-loader/tree/v0.28.11#importloaders
-        }
-      },
-      'postcss-loader',
-      'stylus-loader',
-    ]
-  })
-}
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 const cssLoader = {
   test: /\.css$/,
-  loader: ExtractTextPlugin.extract({
-    fallback: "vue-style-loader",
-    use: [
-      {
-        loader: 'css-loader',
-        options: {
-          importLoaders: 1 // https://github.com/webpack-contrib/css-loader/tree/v0.28.11#importloaders
-        }
-      },
-      'postcss-loader',
-    ]
-  })
+  use: [
+    MiniCssExtractPlugin.loader,
+    'css-loader',
+  ]
+}
+
+const stylusLoader = {
+  test: /\.styl(us)?$/,
+  use: [
+    MiniCssExtractPlugin.loader,
+    'css-loader',
+    'stylus-loader',
+  ]
 }
 
 var prodConf = {
+  mode: 'production',
   module: {
     rules: [
       stylusLoader,
@@ -46,15 +32,22 @@ var prodConf = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('[name].[contenthash].css'),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css'
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new WebpackMd5Hash()
-  ]
+  ],
+  optimization: {
+    // https://github.com/webpack-contrib/mini-css-extract-plugin/tree/v0.4.4#minimizing-for-production
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true // set to true if you want JS source maps
+      }),
+      new OptimizeCSSAssetsPlugin({})
+    ]
+  },
 }
 
 if (process.env.HOSTALIAS) {
