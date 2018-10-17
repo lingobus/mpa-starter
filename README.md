@@ -20,6 +20,9 @@
 ## Build Setup
 
 ``` bash
+# download repo
+git clone https://github.com/lingobus/mpa-starter.git
+
 # install dependencies
 yarn or npm install
 
@@ -37,4 +40,30 @@ PAGE=login npm run release
 PAGE=index,login,register npm start
 PAGE=index,login,register npm run release
 
+```
+
+## File naming note
+- common components and assets are placed under `src/commom` directory，page related code are placed under `src/pages` directory，page entry must be `src/pages/${pageName}/index.js` or `src/pages/${pageName}/${locale}/index.js`, page template must be `src/pages/${pageName}/index.pug` or `src/pages/${pageName}/${locale}/index.pug`.
+- `/src/js/common/lib` hold external assets for sharing with multiple pages and speed up compiling,  but may bring in compatibility problems.
+
+## Asset import note
+in styl
+```
+background: url('~@/img/common@2x.png')
+background: url('./img/banner@2x.png')
+```
+
+in vue
+```
+img(src='@/img/common@2x.png')
+img(src='./img/banner@2x.png')
+
+background: url('~@/img/common@2x.png')
+background: url('./img/banner@2x.png')
+```
+
+in pug
+```
+img(src=require('@/img/common/@2x.png'))
+img(src=require('./img/banner@2x.png'))
 ```
