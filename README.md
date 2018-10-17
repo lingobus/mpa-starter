@@ -42,6 +42,15 @@ PAGE=index,login,register npm run release
 
 ```
 
+## Analysis bundle of a single page
+https://webpack.js.org/guides/code-splitting/#bundle-analysis
+```bash
+# generate build/prod/compilation-stats.json
+PAGE=register npm run release
+# analysis with https://github.com/webpack-contrib/webpack-bundle-analyzer
+npm run analyzer
+```
+
 ## File naming note
 - common components and assets are placed under `src/commom` directory，page related code are placed under `src/pages` directory，page entry must be `src/pages/${pageName}/index.js` or `src/pages/${pageName}/${locale}/index.js`, page template must be `src/pages/${pageName}/index.pug` or `src/pages/${pageName}/${locale}/index.pug`.
 - `/src/js/common/lib` hold external assets for sharing with multiple pages and speed up compiling,  but may bring in compatibility problems.

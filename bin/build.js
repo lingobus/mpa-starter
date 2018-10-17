@@ -1,7 +1,9 @@
-var ora = require('ora')
-var webpack = require('webpack')
-var utils = require('./utils.js')
+const ora = require('ora')
+const webpack = require('webpack')
+const utils = require('./utils.js')
 const getConfig = require('./webpack.prod.conf')
+const fs = require('fs')
+const config = require('./config.js')
 
 let entrys = utils.getEntries() // compile all entries by default
 
@@ -29,6 +31,7 @@ webpack(configs, function (err, stats) {
     return
   }
   process.stdout.write(stats.toString('normal') + '\n\n')
+  fs.writeFileSync(config.paths.compilationStatsOutput, JSON.stringify(stats.toJson(), null, 2))
 })
 
 function errorHandler (err) {

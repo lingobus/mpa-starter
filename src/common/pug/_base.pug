@@ -8,6 +8,7 @@ html
     meta(content="charset=utf-8")
     +meta-seo()
     block meta
+      +favicon()
     +i18nMixin()
     block script
     block libcss
@@ -17,6 +18,7 @@ html
 
   body
     block main
+      #root
     block libjs
       //- make large dependences external to speed up compilition and browser will cache these
       //- remember to add externals in bin/config.js when add new lib

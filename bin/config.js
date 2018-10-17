@@ -1,10 +1,11 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 require('colors')
-var path = require('path')
-var prettyjson = require('prettyjson')
-var buildPath = '../build'
+const path = require('path')
+const prettyjson = require('prettyjson')
+const buildPath = '../build'
 
 const env = process.env.NODE_ENV === 'development' ? 'dev' : 'prod'
+const assetsRoot = path.resolve(__dirname, buildPath, env)
 
 const envconfigs = {
   port: 8080,
@@ -12,8 +13,9 @@ const envconfigs = {
     root: path.resolve(__dirname, '..'),
     src: path.resolve(__dirname, '../src'),
     build: path.resolve(__dirname, buildPath),
-    assetsRoot: path.resolve(__dirname, buildPath, env),
+    assetsRoot,
     assetsPublicPath: '/static/',
+    compilationStatsOutput: path.resolve(assetsRoot, 'compilation-stats.json'),
   },
   externals: {
     'axios': 'axios',
