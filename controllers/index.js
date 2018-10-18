@@ -46,6 +46,10 @@ function applyRouter(app) {
       path: '/reset-password',
       template: 'reset-password',
     },
+    {
+      path: '/dynamic-import',
+      template: 'dynamic-import',
+    },
   ]
 
   pages.forEach(p => {

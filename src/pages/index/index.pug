@@ -53,6 +53,10 @@ mixin content ()
           path: 'register',
           text: 'register'
         },
+        {
+          path: 'dynamic-import',
+          text: 'dynamic import, async component'
+        },
       ]
     - for (var i = 0; i < data.length; i++)
       a(href=data[i].path)=`${i+1}: ${data[i].text}`
