@@ -14,6 +14,7 @@ const cssLoader = {
     {
       resourceQuery: /scoped/,
       use: [
+        'vue-style-loader',
         'css-loader',
       ]
     },
@@ -35,6 +36,7 @@ const stylusLoader = {
     {
       resourceQuery: /scoped/,
       use: [
+        'vue-style-loader',
         'css-loader',
         'stylus-loader',
       ]
