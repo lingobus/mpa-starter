@@ -8,18 +8,45 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 const cssLoader = {
   test: /\.css$/,
-  use: [
-    MiniCssExtractPlugin.loader,
-    'css-loader',
+  oneOf: [
+    // this applies to <style scoped></style> in Vue components
+    // make scoped style inline to not affect contenthash
+    {
+      resourceQuery: /scoped/,
+      use: [
+        'css-loader',
+      ]
+    },
+    // this applies to .css file and <style></style> in Vue components
+    {
+      use: [
+        MiniCssExtractPlugin.loader,
+        'css-loader',
+      ]
+    },
   ]
 }
 
 const stylusLoader = {
   test: /\.styl(us)?$/,
-  use: [
-    MiniCssExtractPlugin.loader,
-    'css-loader',
-    'stylus-loader',
+  oneOf: [
+    // this applies to <template lang="stylus" scoped> in Vue components
+    // make scoped style inline to not affect contenthash
+    {
+      resourceQuery: /scoped/,
+      use: [
+        'css-loader',
+        'stylus-loader',
+      ]
+    },
+    // this applies to .styl(us) file and <template lang="stylus">
+    {
+      use: [
+        MiniCssExtractPlugin.loader,
+        'css-loader',
+        'stylus-loader',
+      ]
+    },
   ]
 }
 
@@ -48,10 +75,13 @@ function getProdConf (params) {
         }),
         new OptimizeCSSAssetsPlugin({})
       ],
+      /*
+      // split webpack runtime code into serperated runtime.[contenthash].js
       // https://webpack.js.org/configuration/optimization/#optimization-runtimechunk
       runtimeChunk: {
         name: 'pages/' + params.name + '/runtime',
       },
+      */
       // https://webpack.js.org/plugins/split-chunks-plugin/#optimization-splitchunks
       splitChunks: {
         minSize: 30000, // Minimum size, in bytes, for a chunk to be generated. default 30000

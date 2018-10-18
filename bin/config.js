@@ -39,7 +39,7 @@ const envconfigs = {
     "fonts": path.resolve(__dirname, '../src/common/fonts'),
     "common": path.resolve(__dirname, '../common'),
   },
-  imgHashLength: 7,
+  imgHashLength: 8,
   imgReg: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
 }
 console.log('Enviroment Configuration:'.magenta.bold)

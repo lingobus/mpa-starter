@@ -14,7 +14,8 @@ const imageLoader = {
     emitFile: true,
     context: path.join(config.paths.src),
     limit: 10000,
-    name: env === 'dev' ? '[path][name].[ext]' : '[path][name].[hash:7].[ext]'
+    // url-loader(use file-loader inside) hash means contenthash: https://github.com/webpack-contrib/file-loader/issues/177
+    name: env === 'dev' ? '[path][name].[ext]' : `[path][name].[hash:${config.imgHashLength}].[ext]`
   }
 }
 
@@ -23,7 +24,8 @@ const fontLoader = {
   loader: 'url-loader',
   query: {
     limit: 10000,
-    name: env === 'dev' ? 'common/fonts/[name].[ext]' : 'common/fonts/[name].[hash:7].[ext]'
+    // url-loader(use file-loader inside) hash means contenthash: https://github.com/webpack-contrib/file-loader/issues/177
+    name: env === 'dev' ? 'common/fonts/[name].[ext]' : `common/fonts/[name].[hash:${config.imgHashLength}].[ext]`
   }
 }
 
@@ -71,7 +73,7 @@ function getBaseConf (params) {
     context: config.paths.root,
     output: {
       path: config.paths.assetsRoot,
-      filename: env == 'dev' ? '[name].js' : '[name].[chunkhash].js',
+      filename: env == 'dev' ? '[name].js' : '[name].[contenthash].js',
       publicPath: config.paths.assetsPublicPath,
     },
     entry,
