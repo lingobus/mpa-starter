@@ -45,6 +45,7 @@
     "pug-plain-loader": "1.0.0",
     "raw-loader": "0.5.1",
     "style-loader": "0.23.1",
+    "stylus": "0.54.5",
     "stylus-loader": "3.0.2",
     "uglifyjs-webpack-plugin": "2.0.1",
     "url-loader": "1.1.2",
@@ -52,7 +53,7 @@
     "vue-template-compiler": "2.5.17",
     "webpack": "4.20.2",
     "webpack-bundle-analyzer": "3.0.3",
-    "webpack-dev-middleware": "1.10.2",
+    "webpack-dev-middleware": "3.4.0",
     "webpack-hot-middleware": "2.24.3",
     "webpack-merge": "4.1.4"
   },

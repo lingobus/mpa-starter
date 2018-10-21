@@ -84,3 +84,6 @@ in pug
 img(src=require('@/img/common/@2x.png'))
 img(src=require('./img/banner@2x.png'))
 ```
+
+## Known issues
+1. When you run `npm start` with multiple pages, all bundles will be rebuilded when you change code in one because webpack-dev-middleware seems don't support multi-compiler. So always specify one page like `PAGE=* npm start` in development.

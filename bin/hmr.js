@@ -40,6 +40,8 @@ module.exports = function (app) {
   // console.log(configs)
   // console.log("=====================================")
 
+  // https://webpack.js.org/configuration/configuration-types/#exporting-multiple-configurations
+  // but maybe we should not use multi-compiler, just use multiple entries: https://webpack.js.org/concepts/entry-points/#multi-page-application
   const compiler = webpack(configs)
   app.use(require("webpack-dev-middleware")(compiler, {
     publicPath: config.paths.assetsPublicPath,

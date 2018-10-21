@@ -24,6 +24,8 @@ const configs = entrys.map(entry => getConfig(entry))
 
 var spinner = ora('Building')
 spinner.start()
+
+// https://webpack.js.org/configuration/configuration-types/#exporting-multiple-configurations
 webpack(configs, function (err, stats) {
   spinner.stop()
   if (err) {
