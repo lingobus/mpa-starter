@@ -1,6 +1,6 @@
 import cookies from 'cookies-js'
 import axios from 'axios'
-import Settings from 'common/settings.js'
+import Settings from 'root/common/settings.js'
 const TOKEN_NAME = Settings.PROJECT
 axios.interceptors.request.use(config => {
   if (config.headers.token) return config

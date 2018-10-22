@@ -6,6 +6,8 @@ pageInit ({
   vue: {
     name: 'bem',
     components: {
+    },
+    mounted () {
     }
   }
 })

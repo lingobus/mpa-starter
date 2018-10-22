@@ -1,6 +1,6 @@
 import axios from 'axios'
 import cookies from 'cookies-js'
-import Settings from 'common/settings.js'
+import Settings from 'root/common/settings.js'
 
 export function get(...args) {
   return axios.get.apply(axios, args)

@@ -37,9 +37,11 @@ PAGE=login npm start
 PAGE=login npm run release
 
 # you can specify multiple pages with ',' as seperator
-PAGE=index,login,register npm start
+PAGE=index,login,register npm start # see https://github.com/lingobus/mpa-starter#known-issues
 PAGE=index,login,register npm run release
 
+# you can run dev-server with a different port number in development(usefull when develop multiple pages in parallel)
+PAGE=lazyload PORT=8081 npm start
 ```
 
 ## Explaination about webpack output
@@ -86,4 +88,4 @@ img(src=require('./img/banner@2x.png'))
 ```
 
 ## Known issues
-1. When you run `npm start` with multiple pages, all bundles will be rebuilded when you change code in one because webpack-dev-middleware seems don't support multi-compiler. So always specify one page like `PAGE=* npm start` in development.
+1. When you run `npm start` with multiple pages, all bundles will be rebuilded when you change code in one because webpack-dev-middleware seems don't support multi-compiler. So always specify one page like `PAGE=* npm start` in development. If you want to develop multiple pages in parallel, run anther dev-server with a defferent port number like `PAGE=lazyload PORT=8081 npm start`.

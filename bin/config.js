@@ -8,7 +8,7 @@ const env = process.env.NODE_ENV === 'development' ? 'dev' : 'prod'
 const assetsRoot = path.resolve(__dirname, buildPath, env)
 
 const envconfigs = {
-  port: 8080,
+  port: process.env.PORT || 8080,
   paths: {
     root: path.resolve(__dirname, '..'),
     src: path.resolve(__dirname, '../src'),
@@ -37,7 +37,8 @@ const envconfigs = {
     "mixin": path.resolve(__dirname, '../src/common/mixin'),
     "img": path.resolve(__dirname, '../src/common/img'),
     "fonts": path.resolve(__dirname, '../src/common/fonts'),
-    "common": path.resolve(__dirname, '../common'),
+    "common": path.resolve(__dirname, '../src/common'),
+    "root": path.resolve(__dirname, '..'),
   },
   imgHashLength: 8,
   imgReg: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
