@@ -2,6 +2,8 @@
 
 > An newest advanced full feature multi-page website starter
 
+> This project uses server render. For prerender version: see https://github.com/zzz945/mpa-starter
+
 ## Features
 1. webpack@4.2.0
 2. babel 7 with preset-env(using browserslist for browser compatibility)
