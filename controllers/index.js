@@ -2,9 +2,6 @@ const router = require('express').Router()
 const DEFAULT_SEO = require('../common/settings.js').DEFAULT_SEO
 
 function applyRouter(app) {
-  // lottie
-  // intro.js
-  // 视差动画 scrollreveal，scrollmagic
   const pages = [
     {
       path: '/',
@@ -49,6 +46,10 @@ function applyRouter(app) {
     {
       path: '/dynamic-import',
       template: 'dynamic-import',
+    },
+    {
+      path: '/storage-management',
+      template: 'storage-management',
     },
   ]
 
