@@ -9,11 +9,7 @@ function getEntries(extensions) {
   const pagesPath = srcPath + '/pages'
   const res = []
   extensions.forEach(ext => {
-    let files = glob.sync(pagesPath + "/*/index" + ext) // for example: page/home/index.js
-    settings.SUPPORTED_LANGS.forEach(lang => {
-      files = files.concat(glob.sync(pagesPath + "/*/" + lang + "/index" + ext)) // for example: page/home/en-us/index.js
-    })
-
+    const files = glob.sync(pagesPath + "/*/index" + ext) // for example: page/home/index.js
     files.forEach(function(filepath) {
       const outputName = path.relative(srcPath, filepath.substring(0, filepath.lastIndexOf('.')))
       const entry = {
@@ -23,6 +19,19 @@ function getEntries(extensions) {
       }
       res.push(entry)
     })
+    settings.SUPPORTED_LANGS.forEach(lang => {
+      const files = glob.sync(pagesPath + "/*/" + lang + "/index" + ext) // for example: page/home/en-us/index.js
+      files.forEach(function(filepath) {
+        const outputName = path.relative(srcPath, filepath.substring(0, filepath.lastIndexOf('.')))
+        const entry = {
+          name: outputName.split('/')[1] + '/' + lang,
+          entryPath: filepath,
+          outputName,
+        }
+        res.push(entry)
+      })
+    })
+
   })
   return res
 }

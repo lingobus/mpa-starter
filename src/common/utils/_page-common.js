@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 import parseQuery, { encodeQuery } from 'utils/_parse-query.js'
-import { i18nInit } from 'compound-utils/i18n'
+import { i18nInit } from 'utils/i18n'
 
 export function pageInit (params = {}) {
   const {
@@ -16,6 +16,5 @@ export function pageInit (params = {}) {
   if (!vue.el) {
     vue.el = "#root"
   }
-
   new Vue(vue)
 }

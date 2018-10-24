@@ -21,8 +21,8 @@ const singleTemplatePages = [
 
 singleTemplatePages.forEach(page => {
   function renderPage (res, page, locale) {
-    const l = formatLocale(locale)
-    res.render(page.template, Object.assign({}, DEFAULT_SEO, { l }, page.i18n[l], page.locals))
+    locale = formatLocale(locale)
+    res.render(page.template, Object.assign({}, DEFAULT_SEO, { locale }, page.i18n[locale], page.locals))
   }
 
   // 路径中有locale以路径为准
@@ -30,9 +30,9 @@ singleTemplatePages.forEach(page => {
     renderPage(res, page, req.params.locale)
   })
 
-  // 路径中没有locale以cookie为准
+  // 路径中没有locale返回default
   router.get(page.path, function (req, res, next) {
-    renderPage(res, page, req.cookies.locale || DEFAULT_LANG)
+    renderPage(res, page, DEFAULT_LANG)
   })
 })
 
@@ -46,7 +46,7 @@ const multiTemplatePages = [
 
 multiTemplatePages.forEach(page => {
   function renderPage (res, page, locale) {
-    res.render(page.template + '/' + locale, Object.assign({}, DEFAULT_SEO, { locale: formatLocale(locale) }, page.locals))
+    res.render(page.template + '/' + locale.toLowerCase(), Object.assign({}, DEFAULT_SEO, { locale: formatLocale(locale) }, page.locals))
   }
 
   // 路径中有locale以路径为准
@@ -54,9 +54,9 @@ multiTemplatePages.forEach(page => {
     renderPage(res, page, req.params.locale)
   })
 
-  // 路径中没有locale以cookie为准
+  // 路径中没有locale返回default
   router.get(page.path, function (req, res, next) {
-    renderPage(res, page, req.cookies.locale || DEFAULT_LANG)
+    renderPage(res, page, DEFAULT_LANG)
   })
 })
 
