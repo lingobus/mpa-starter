@@ -1,11 +1,10 @@
-const webpack = require('webpack')
 const path = require('path')
 const config = require('./config.js')
 const env = process.env.NODE_ENV === 'development' ? 'dev' : 'prod'
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const PugWebpackPlugin = require('./pug-webpack-plugin.js')
 
 const imageLoader = {
   test: config.imgReg,
@@ -62,8 +61,7 @@ function getBaseConf (params) {
   const name = params.name
   const outputName = params.outputName // js output path + name
   const entryPath = params.entryPath // js entry path
-  const pugTemplate = entryPath.substring(0, params.entryPath.lastIndexOf('.')) + '.pug'
-  const htmlOutput = outputName.substring(0, params.entryPath.lastIndexOf('.')) + '.ejs'
+
   const entry = {}
   entry[outputName] = [entryPath]
   return {
@@ -85,10 +83,13 @@ function getBaseConf (params) {
     },
     plugins: [
       new VueLoaderPlugin(),
-      new HtmlWebpackPlugin({
-        filename: htmlOutput,
-        template: pugTemplate,
-        alwaysWriteToDisk: true,
+      new PugWebpackPlugin({
+        srcPath: config.paths.src,
+        buildPath: config.paths.assetsRoot,
+        publicPath: config.paths.assetsPublicPath,
+        template: entryPath.substring(0, params.entryPath.lastIndexOf('.')) + '.pug',
+        output: outputName.substring(0, params.entryPath.lastIndexOf('.')) + '.pug',
+        reloadPageFn: env==='dev'?require('./hmr').reloadPage:null, // TODO: use plugin event instead
       }),
       new CopyWebpackPlugin([
         {

@@ -36,7 +36,7 @@ var devConf = {
     ]
   },
   plugins: [
-    new HtmlWebpackHarddiskPlugin(),
+    // new HtmlWebpackHarddiskPlugin(),
     new FriendlyErrorsPlugin(),
   ]
 }

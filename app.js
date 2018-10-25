@@ -17,13 +17,13 @@ console.log(('Static Directory set to:\n  '.magenta.bold + staticPath).green)
 
 const app = express()
 app.set('views', config.paths.build + '/' + env + '/pages')
-app.set('view engine', 'ejs')
+app.set('view engine', 'pug')
 
 if (env === 'dev') {
   console.log('Using Development Env Config'.cyan.inverse)
   if (process.env.HMR) {
     console.log('Using HMR')
-    require('./bin/hmr.js')(app)
+    require('./bin/hmr.js').apply(app)
   }
   app.locals.isdev = true
   app.locals.pretty = true

@@ -4,7 +4,9 @@ const config = require('./config.js')
 const utils = require('./utils.js')
 const merge = require('webpack-merge')
 
-module.exports = function (app) {
+let hotMiddleware
+
+function apply (app) {
   let entrys = utils.getEntries() // compile all entries by default
 
   if (process.env.PAGE) {
@@ -30,7 +32,6 @@ module.exports = function (app) {
       plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
-        pugHotReload,
       ]
     }
     return merge(getConfig(params), hmrConfig)
@@ -52,7 +53,7 @@ module.exports = function (app) {
     }
   }))
 
-  const hotMiddleware = require("webpack-hot-middleware")(compiler, {
+  hotMiddleware = require("webpack-hot-middleware")(compiler, {
     log: console.log,
     path: '/__webpack_hmr',
     heartBeat: 5 * 1000
@@ -60,22 +61,15 @@ module.exports = function (app) {
 
   app.use(hotMiddleware)
 
-  function pugHotReload () {
-    const name = 'pug-hot-reload-plugin'
-    if (this.hooks) {  // for webpack 4
-      this.hooks.compilation.tap(name, function (compilation) {
-        compilation.hooks.htmlWebpackPluginAfterEmit.tapAsync(name, (data, cb) => {
-          hotMiddleware.publish({ action: 'reload' })
-          cb()
-        });
-      });
-    } else { // for webpack 3
-      this.plugin('compilation', function (compilation) {
-        compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
-          hotMiddleware.publish({ action: 'reload' })
-          cb()
-        })
-      })
-    }
-  }
+
 }
+
+function reloadPage () {
+  hotMiddleware.publish({ action: 'reload' })
+}
+
+module.exports = {
+  apply,
+  reloadPage,
+}
+
