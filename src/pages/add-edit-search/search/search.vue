@@ -36,7 +36,6 @@
 </style>
 
 <script>
-
 import SearchMixin from 'mpa-common-library/mixin/search'
 import api from 'api/_add-edit-search.api.js'
 import validationRules from '../validation-rules.js'
