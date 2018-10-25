@@ -38,7 +38,6 @@ const jsLoader = {
   test: /\.js$/,
   loader: 'babel-loader',
   exclude: /node_modules/,
-  include: config.paths.src,
   query: {
     cacheDirectory: path.resolve(config.paths.build, 'tmp')
   }
@@ -91,10 +90,16 @@ function getBaseConf (params) {
         template: pugTemplate,
         alwaysWriteToDisk: true,
       }),
-      new CopyWebpackPlugin([{
-        from: path.join(config.paths.src, 'common/lib'),
-        to: path.join(config.paths.assetsRoot, 'common/lib')
-      }])
+      new CopyWebpackPlugin([
+        {
+          from: path.join(config.paths.src, 'common/lib'),
+          to: path.join(config.paths.assetsRoot, 'common/lib')
+        },
+        {
+          from: path.join(config.paths.src, 'common/fonts'),
+          to: path.join(config.paths.assetsRoot, 'common/fonts'),
+        }
+      ])
     ]
   }
 }
