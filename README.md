@@ -1,8 +1,11 @@
 # Description
 
-> An newest advanced full feature multi-page website starter
+An multi-page website starter based on https://github.com/lingobus/mpa-vue-template for solving the following problems.
 
-> This project uses server render. For prerender version: see https://github.com/zzz945/mpa-starter
+1. development experience goes worse as pages number grows.(随着页面增多，开发体验极剧变差)
+2. store img, pug, js, css by file type make page and component not compact.(按文件类型存img,pug,js,css使得页面、组件聚合度底)
+
+This project uses server render. For prerender version: see https://github.com/zzz945/mpa-starter
 
 ## Features
 1. webpack@4.2.0
