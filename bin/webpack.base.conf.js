@@ -4,7 +4,7 @@ const env = process.env.NODE_ENV === 'development' ? 'dev' : 'prod'
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const PugWebpackPlugin = require('./pug-webpack-plugin.js')
+const PugWebpackPlugin = require('pug-webpack-plugin')
 
 const imageLoader = {
   test: config.imgReg,
