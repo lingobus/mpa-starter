@@ -84,12 +84,10 @@ function getBaseConf (params) {
     plugins: [
       new VueLoaderPlugin(),
       new PugWebpackPlugin({
-        srcPath: config.paths.src,
-        buildPath: config.paths.assetsRoot,
         publicPath: config.paths.assetsPublicPath,
+        context: config.paths.src,
         template: entryPath.substring(0, params.entryPath.lastIndexOf('.')) + '.pug',
-        output: outputName.substring(0, params.entryPath.lastIndexOf('.')) + '.pug',
-        reloadPageFn: env==='dev'?require('./hmr').reloadPage:null, // TODO: use plugin event instead
+        outputPath: config.paths.assetsRoot,
       }),
       new CopyWebpackPlugin([
         {

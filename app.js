@@ -23,7 +23,7 @@ if (env === 'dev') {
   console.log('Using Development Env Config'.cyan.inverse)
   if (process.env.HMR) {
     console.log('Using HMR')
-    require('./bin/hmr.js').apply(app)
+    require('./bin/hmr.js')(app)
   }
   app.locals.isdev = true
   app.locals.pretty = true

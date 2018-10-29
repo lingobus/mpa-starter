@@ -5457,9 +5457,9 @@ pug-walk@^1.0.0, pug-walk@^1.1.7:
   resolved "https://registry.yarnpkg.com/pug-walk/-/pug-walk-1.1.7.tgz#c00d5c5128bac5806bec15d2b7e7cdabe42531f3"
   integrity sha1-wA1cUSi6xYBr7BXSt+fNq+QlMfM=
 
-pug-webpack-plugin@lingobus/pug-webpack-plugin#v0.0.2:
+pug-webpack-plugin@lingobus/pug-webpack-plugin#v0.0.3:
   version "1.0.0"
-  resolved "https://codeload.github.com/lingobus/pug-webpack-plugin/tar.gz/a0ea14daf3d880a69f37f8f435b53578a93631e6"
+  resolved "https://codeload.github.com/lingobus/pug-webpack-plugin/tar.gz/1b52fc8d32bdc3c8a0f03fc9e53a8224b0439bca"
   dependencies:
     fs-extra "7.0.0"
     pug "2.0.3"

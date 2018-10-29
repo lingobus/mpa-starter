@@ -3,10 +3,11 @@ const getConfig = require('./webpack.dev.conf')
 const config = require('./config.js')
 const utils = require('./utils.js')
 const merge = require('webpack-merge')
+const PugWebpackPlugin = require('pug-webpack-plugin')
 
 let hotMiddleware
 
-function apply (app) {
+module.exports = function apply (app) {
   let entrys = utils.getEntries() // compile all entries by default
 
   if (process.env.PAGE) {
@@ -32,6 +33,7 @@ function apply (app) {
       plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
+        pugHotReload,
       ]
     }
     return merge(getConfig(params), hmrConfig)
@@ -61,15 +63,10 @@ function apply (app) {
 
   app.use(hotMiddleware)
 
-
+  function pugHotReload () {
+    PugWebpackPlugin.hooks.afterEmit.tapAsync('PugHotReload', (data, cb) => {
+      hotMiddleware.publish({ action: 'reload' })
+      cb()
+    });
+  }
 }
-
-function reloadPage () {
-  hotMiddleware.publish({ action: 'reload' })
-}
-
-module.exports = {
-  apply,
-  reloadPage,
-}
-
