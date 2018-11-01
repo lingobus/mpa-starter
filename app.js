@@ -62,6 +62,7 @@ app.use(function(req, res) {
 /* 500 */
 app.use(function(error, req, res, next) {
   res.status(500);
+  console.log(error)
   res.render('500', Object.assign({}, DEFAULT_SEO, { error: error }))
 })
 

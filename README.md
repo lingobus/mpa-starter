@@ -27,12 +27,11 @@ This project uses server render. For prerender version: see https://github.com/z
 ``` bash
 # download repo
 git clone https://github.com/lingobus/mpa-starter.git
-cd mpa-starter/src
-git clone https://github.com/zzz945/mpa-common-library.git
-cd ..
+cd mpa-starter
 
 # install dependencies
 yarn or npm install
+npm run clone
 
 # serve all pages with hot reload
 npm start
