@@ -45,4 +45,17 @@ router.post('/reset-password', function (req, res) {
   })
 })
 
+router.get('/permissions', function (req, res) {
+  res.send({
+    "code": 200,
+    "data": {
+      permissions: [
+        'page2'
+      ],
+    },
+    "msg": "OK",
+    "success": true
+  })
+})
+
 module.exports = router

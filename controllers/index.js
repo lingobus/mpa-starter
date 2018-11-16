@@ -61,6 +61,7 @@ function applyRouter(app) {
 
   app.use(require('./i18n'))
   app.use(require('./add-edit-search'))
+  app.use(require('./permissions'))
   app.use(router)
 }
 

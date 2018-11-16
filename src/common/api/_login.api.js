@@ -13,4 +13,6 @@ api.sendCodeByEmail = makeGet(apiurl('/login/send-code-by-email'))
 api.sendCodeByPhone = makeGet(apiurl('/login/send-code-by-phone'))
 api.resetPassword = makePost(apiurl('/login/reset-password'))
 
+api.getPermissions = makeGet(apiurl('/login/permissions'))
+
 export default api
