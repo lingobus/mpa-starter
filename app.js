@@ -34,9 +34,8 @@ if (env === 'dev') {
   app.locals.pretty = false
 }
 
-if (env === 'dev') {
-  app.use(require('./mock'))
-}
+app.use(require('./mock'))
+
 // proxy(app)
 proxy(app)
 app.use(useragent.express())
