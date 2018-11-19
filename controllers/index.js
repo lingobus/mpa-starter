@@ -51,6 +51,10 @@ function applyRouter(app) {
       path: '/storage-management',
       template: 'storage-management',
     },
+    {
+      path: '/components-demo',
+      template: 'components-demo',
+    },
   ]
 
   pages.forEach(p => {
