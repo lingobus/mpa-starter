@@ -11,6 +11,7 @@ json(router, '/search', {
         age: 11,
         phone: '234234234',
         email: '23423423@fe.com',
+        referrer: 2,
       },
       {
         id: 1,
@@ -18,6 +19,7 @@ json(router, '/search', {
         age: 11,
         phone: '234234234',
         email: '23423423@fe.com',
+        referrer: 2,
       },
       {
         id: 1,
@@ -25,6 +27,7 @@ json(router, '/search', {
         age: 11,
         phone: '234234234',
         email: '23423423@fe.com',
+        referrer: 2,
       },
       {
         id: 1,
@@ -32,6 +35,7 @@ json(router, '/search', {
         age: 11,
         phone: '234234234',
         email: '23423423@fe.com',
+        referrer: 2,
       },
       {
         id: 1,
@@ -39,6 +43,7 @@ json(router, '/search', {
         age: 11,
         phone: '234234234',
         email: '23423423@fe.com',
+        referrer: 2,
       },
     ],
     total: 300
@@ -56,9 +61,7 @@ json(router, '/delete', {
 json(router, '/add', {
   "code": 200,
   "msg": "OK",
-  "data": {
-    id: 1
-  },
+  "data": 1,
   "success": true
 })
 
