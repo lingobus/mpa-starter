@@ -1,11 +1,6 @@
 # Description
 
-An multi-page website starter based on https://github.com/lingobus/mpa-vue-template for solving the following problems.
-
-1. development experience goes worse as pages number grows.(随着页面增多，开发体验极剧变差)
-2. store img, pug, js, css by file type make page and component not compact.(按文件类型存img,pug,js,css使得页面、组件聚合度底)
-
-This project uses server render. For prerender version: see https://github.com/zzz945/mpa-starter
+An multi-page website starter based on https://github.com/lingobus/mpa-vue-template.
 
 ## Features
 1. webpack@4.2.0
@@ -15,12 +10,17 @@ This project uses server render. For prerender version: see https://github.com/z
 5. stylus(stylus -> postcss)
 6. postcss with autoprefixer,preset-env(using browserslist for browser compatibility)
 7. multiple pages
-8. specify one or multiple page(s) for development(production) to speed up your work flow
-9. hmr for everything
-10. element-ui@2.4.8
-11. axios@0.18.0
-12. mock data
-13. a bunch of solutions......
+8. element-ui@2.4.8
+9. axios@0.18.0
+10. mock data
+11. a bunch of solutions......
+
+using the best practice of multi-page webpack config is the principle of this project. you can:
+1. use `require('./some-img.png')` in pug entry.
+2. write pug with hmr support(entry png, vue pug and their included or extended dependences ).
+3. js/css injection support for pug entry.
+4. put all dependences(pug,css,js,img...) of one page in one folder.
+5. specify page num and port name when running dev server(PAGE=lazyload PORT=8081 npm start)
 
 ## Build Setup
 
@@ -95,4 +95,4 @@ img(src=require('./img/banner@2x.png'))
 ```
 
 ## Known issues
-1. When you run `npm start` with multiple pages, all bundles will be rebuilded when you change code in one because webpack-dev-middleware seems don't support multi-compiler. So always specify one page like `PAGE=* npm start` in development. If you want to develop multiple pages in parallel, run anther dev-server with a defferent port number like `PAGE=lazyload PORT=8081 npm start`.
+1. When you run `npm start` with multiple pages, all bundles will be rebuilded when you change code in one because webpack-dev-middleware seems don't support multi-compiler. So always specify one page like `PAGE=* npm start` in development. If you want to develop multiple pages in parallel, run another dev-server with a different port number like `PAGE=lazyload PORT=8081 npm start`.
