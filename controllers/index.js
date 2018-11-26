@@ -55,6 +55,10 @@ function applyRouter(app) {
       path: '/components-demo',
       template: 'components-demo',
     },
+    {
+      path: '/dynamic-form-validation',
+      template: 'dynamic-form-validation',
+    },
   ]
 
   pages.forEach(p => {
