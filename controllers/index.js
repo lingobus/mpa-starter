@@ -59,6 +59,10 @@ function applyRouter(app) {
       path: '/dynamic-form-validation',
       template: 'dynamic-form-validation',
     },
+    {
+      path: '/grid-layout',
+      template: 'grid-layout',
+    },
   ]
 
   pages.forEach(p => {
