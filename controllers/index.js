@@ -63,6 +63,10 @@ function applyRouter(app) {
       path: '/grid-layout',
       template: 'grid-layout',
     },
+    {
+      path: '/constant-width-to-height-ratio',
+      template: 'constant-width-to-height-ratio',
+    }
   ]
 
   pages.forEach(p => {
