@@ -54,12 +54,14 @@ require('./controllers')(app)
 
 /* 404 */
 app.use(function(req, res) {
+  console.log(('404:' + req.path).yellow)
   res.status(404);
   res.render('404', DEFAULT_SEO)
 })
 
 /* 500 */
 app.use(function(error, req, res, next) {
+  console.log(('500:' + req.path).yellow)
   res.status(500);
   console.log(error)
   res.render('500', Object.assign({}, DEFAULT_SEO, { error: error }))

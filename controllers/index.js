@@ -1,4 +1,6 @@
 const router = require('express').Router()
+const config = require('../bin/config.js')
+const staticPath = config.paths.assetsRoot
 const DEFAULT_SEO = require('../common/settings.js').DEFAULT_SEO
 
 function applyRouter(app) {
@@ -66,6 +68,11 @@ function applyRouter(app) {
     {
       path: '/constant-width-to-height-ratio',
       template: 'constant-width-to-height-ratio',
+    },
+    {
+      path: '/service-worker',
+      template: 'service-worker',
+      serviceWorker: '/service-worker/sw.js'
     }
   ]
 
@@ -73,6 +80,11 @@ function applyRouter(app) {
     router.get(p.path, function (req, res) {
       res.render(p.template, Object.assign({}, DEFAULT_SEO, p.locals))
     })
+    if (p.serviceWorker) {
+      router.get(p.serviceWorker, function (req, res) {
+        res.sendFile(staticPath + '/pages' + p.serviceWorker)
+      })
+    }
   })
 
   app.use(require('./i18n'))

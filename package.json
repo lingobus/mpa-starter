@@ -48,7 +48,7 @@
     "pug": "2.0.3",
     "pug-loader": "2.4.0",
     "pug-plain-loader": "1.0.0",
-    "pug-webpack-plugin": "lingobus/pug-webpack-plugin#0.0.4",
+    "pug-webpack-plugin": "lingobus/pug-webpack-plugin#0.0.5",
     "raw-loader": "0.5.1",
     "style-loader": "0.23.1",
     "stylus": "0.54.5",

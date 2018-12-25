@@ -1,4 +1,5 @@
 const path = require('path')
+const fs = require('fs')
 const config = require('./config.js')
 const env = process.env.NODE_ENV === 'development' ? 'dev' : 'prod'
 
@@ -64,13 +65,23 @@ function getBaseConf (params) {
 
   const entry = {}
   entry[outputName] = [entryPath]
+
+  // service worker
+  const swPath = entryPath.substring(0, entryPath.lastIndexOf('/')) + '/sw.js'
+  const swName = outputName.substring(0, outputName.lastIndexOf('/')) + '/sw'
+  if (fs.existsSync(swPath)) {
+    entry[swName] = swPath
+  }
+
   return {
     name,
     target: 'web',
     context: config.paths.root,
     output: {
       path: config.paths.assetsRoot,
-      filename: env == 'dev' ? '[name].js' : '[name].[contenthash].js',
+      filename (data) {
+        return (/pages\/.*\/sw/.test(data.chunk.name) || env === 'dev') ? '[name].js' : '[name].[contenthash].js'
+      },
       publicPath: config.paths.assetsPublicPath,
     },
     entry,
@@ -88,6 +99,7 @@ function getBaseConf (params) {
         context: config.paths.src,
         template: entryPath.substring(0, params.entryPath.lastIndexOf('.')) + '.pug',
         outputPath: config.paths.assetsRoot,
+        excludes: [swName],
       }),
       new CopyWebpackPlugin([
         {
