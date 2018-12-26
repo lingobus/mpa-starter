@@ -83,6 +83,7 @@ function getBaseConf (params) {
         return (/pages\/.*\/sw/.test(data.chunk.name) || env === 'dev') ? '[name].js' : '[name].[contenthash].js'
       },
       publicPath: config.paths.assetsPublicPath,
+      globalObject: 'this' // https://github.com/webpack/webpack/issues/6642#issuecomment-371087342
     },
     entry,
     externals: config.externals,

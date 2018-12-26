@@ -2,7 +2,7 @@
 const merge = require('webpack-merge')
 const getBaseConf = require('./webpack.base.conf')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin')
+const WriteFilePlugin = require('write-file-webpack-plugin')
 
 // Use mini-css-extract-plugin will drop support for hmr, so use style-loader loader in development
 // https://github.com/webpack-contrib/mini-css-extract-plugin/tree/v0.4.4#advanced-configuration-example
@@ -36,8 +36,12 @@ var devConf = {
     ]
   },
   plugins: [
-    // new HtmlWebpackHarddiskPlugin(),
     new FriendlyErrorsPlugin(),
+    new WriteFilePlugin({
+      // Write only service worker files
+      test: /\/sw\.js$/,
+      useHashIndex: true
+    })
   ]
 }
 
