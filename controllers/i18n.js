@@ -1,4 +1,3 @@
-const router = require('express').Router()
 const Settings = require('../common/settings.js')
 const DEFAULT_SEO = Settings.DEFAULT_SEO
 const DEFAULT_LANG = Settings.DEFAULT_LANG
@@ -19,46 +18,55 @@ const singleTemplatePages = [
   }
 ]
 
-singleTemplatePages.forEach(page => {
-  function renderPage (res, page, locale) {
-    locale = formatLocale(locale)
-    res.render(page.template, Object.assign({}, DEFAULT_SEO, { locale }, page.i18n[locale], page.locals))
-  }
-
-  // 路径中有locale以路径为准
-  router.get("/:locale" + page.path, function(req, res, next){
-    renderPage(res, page, req.params.locale)
+function applyRouter(app) {
+  const router = require('express').Router({
+    caseSensitive: app.get('case sensitive routing'),
+    strict: app.get('strict routing')
   })
 
-  // 路径中没有locale返回default
-  router.get(page.path, function (req, res, next) {
-    renderPage(res, page, DEFAULT_LANG)
-  })
-})
+  singleTemplatePages.forEach(page => {
+    function renderPage (res, page, locale) {
+      locale = formatLocale(locale)
+      res.render(page.template, Object.assign({}, DEFAULT_SEO, { locale }, page.i18n[locale], page.locals))
+    }
 
-// 不同语言渲染不同pug模板
-const multiTemplatePages = [
-  {
-    path: '/internationalization-multi',
-    template: 'internationalization-multi',
-  }
-]
+    // 路径中有locale以路径为准
+    router.get("/:locale" + page.path, function(req, res, next){
+      renderPage(res, page, req.params.locale)
+    })
 
-multiTemplatePages.forEach(page => {
-  function renderPage (res, page, locale) {
-    res.render(page.template + '/' + locale.toLowerCase(), Object.assign({}, DEFAULT_SEO, { locale: formatLocale(locale) }, page.locals))
-  }
-
-  // 路径中有locale以路径为准
-  router.get("/:locale" + page.path, function(req, res, next){
-    renderPage(res, page, req.params.locale)
+    // 路径中没有locale返回default
+    router.get(page.path, function (req, res, next) {
+      renderPage(res, page, DEFAULT_LANG)
+    })
   })
 
-  // 路径中没有locale返回default
-  router.get(page.path, function (req, res, next) {
-    renderPage(res, page, DEFAULT_LANG)
+  // 不同语言渲染不同pug模板
+  const multiTemplatePages = [
+    {
+      path: '/internationalization-multi',
+      template: 'internationalization-multi',
+    }
+  ]
+
+  multiTemplatePages.forEach(page => {
+    function renderPage (res, page, locale) {
+      res.render(page.template + '/' + locale.toLowerCase(), Object.assign({}, DEFAULT_SEO, { locale: formatLocale(locale) }, page.locals))
+    }
+
+    // 路径中有locale以路径为准
+    router.get("/:locale" + page.path, function(req, res, next){
+      renderPage(res, page, req.params.locale)
+    })
+
+    // 路径中没有locale返回default
+    router.get(page.path, function (req, res, next) {
+      renderPage(res, page, DEFAULT_LANG)
+    })
   })
-})
+
+  app.use(router)
+}
 
 /**
  * 将 en-us 转换为 en-US
@@ -75,4 +83,4 @@ function formatLocale(str) {
   return res
 }
 
-module.exports = router
+module.exports = applyRouter

@@ -1,76 +1,80 @@
-const router = require('express').Router()
 const config = require('../bin/config.js')
 const staticPath = config.paths.assetsRoot
 const DEFAULT_SEO = require('../common/settings.js').DEFAULT_SEO
 
 function applyRouter(app) {
+  const router = require('express').Router({
+    caseSensitive: app.get('case sensitive routing'),
+    strict: app.get('strict routing')
+  })
+
   const pages = [
     {
       path: '/',
       template: 'index',
     },
     {
-      path: '/bem',
+      path: '/bem/',
       template: 'bem',
     },
     {
-      path: '/mobile-layout1',
+      path: '/mobile-layout1/',
       template: 'mobile-layout1',
     },
     {
-      path: '/mobile-layout2',
+      path: '/mobile-layout2/',
       template: 'mobile-layout2',
     },
     {
-      path: '/mobile-layout3',
+      path: '/mobile-layout3/',
       template: 'mobile-layout3',
     },
     {
-      path: '/mobile-layout4',
+      path: '/mobile-layout4/',
       template: 'mobile-layout4',
     },
     {
-      path: '/lazyload',
+      path: '/lazyload/',
       template: 'lazyload',
     },
     {
-      path: '/login',
+      path: '/login/',
       template: 'login',
     },
     {
-      path: '/register',
+      path: '/register/',
       template: 'register',
     },
     {
-      path: '/reset-password',
+      path: '/reset-password/',
       template: 'reset-password',
     },
     {
-      path: '/dynamic-import',
+      path: '/dynamic-import/',
       template: 'dynamic-import',
     },
     {
-      path: '/storage-management',
+      path: '/storage-management/',
       template: 'storage-management',
     },
     {
-      path: '/components-demo',
+      path: '/components-demo/',
       template: 'components-demo',
     },
     {
-      path: '/dynamic-form-validation',
+      path: '/dynamic-form-validation/',
       template: 'dynamic-form-validation',
     },
     {
-      path: '/grid-layout',
+      path: '/grid-layout/',
       template: 'grid-layout',
     },
     {
-      path: '/constant-width-to-height-ratio',
+      path: '/constant-width-to-height-ratio/',
       template: 'constant-width-to-height-ratio',
     },
     {
-      path: '/service-worker',
+      path: '/service-worker/',
       template: 'service-worker',
       serviceWorker: '/service-worker/sw.js'
     }
@@ -87,9 +91,9 @@ function applyRouter(app) {
     }
   })
 
-  app.use(require('./i18n'))
-  app.use(require('./add-edit-search'))
-  app.use(require('./permissions'))
+  require('./i18n')(app)
+  require('./add-edit-search')(app)
+  require('./permissions')(app)
   app.use(router)
 }
 

@@ -16,6 +16,10 @@ console.log('Using Node %s'.green.bold, process.version)
 console.log(('Static Directory set to:\n  '.magenta.bold + staticPath).green)
 
 const app = express()
+const slash = require('express-slash')
+app.enable('strict routing')
+app.use(slash())
+
 app.set('views', config.paths.build + '/' + env + '/pages')
 app.set('view engine', 'pug')
 
