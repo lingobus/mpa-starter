@@ -51,6 +51,9 @@ app.use(bodyParser.urlencoded({
 /* server static files */
 app.use('/static', express.static(staticPath))
 
+// service worker server
+require('./src/pages/service-worker/server')(app)
+
 /* middleware */
 require('./middlewares')(app)
 /* controllers */
