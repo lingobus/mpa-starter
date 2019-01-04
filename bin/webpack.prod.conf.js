@@ -69,14 +69,14 @@ function getProdConf (params) {
     ],
     optimization: {
       // https://github.com/webpack-contrib/mini-css-extract-plugin/tree/v0.4.4#minimizing-for-production
-      minimizer: [
-        new UglifyJsPlugin({
-          cache: true,
-          parallel: true,
-          sourceMap: true // set to true if you want JS source maps
-        }),
-        new OptimizeCSSAssetsPlugin({})
-      ],
+      // minimizer: [
+      //   new UglifyJsPlugin({
+      //     cache: true,
+      //     parallel: true,
+      //     sourceMap: true // set to true if you want JS source maps
+      //   }),
+      //   new OptimizeCSSAssetsPlugin({})
+      // ],
       /*
       // split webpack runtime code into serperated runtime.[contenthash].js
       // https://webpack.js.org/configuration/optimization/#optimization-runtimechunk

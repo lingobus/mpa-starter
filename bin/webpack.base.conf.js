@@ -58,6 +58,12 @@ const pugLoader = {
   ]
 }
 
+const tsLoader = {
+  test: /\.tsx?$/,
+  loader: 'ts-loader',
+  exclude: /node_modules/,
+}
+
 function getBaseConf (params) {
   const name = params.name
   const outputName = params.outputName // js output path + name
@@ -91,7 +97,7 @@ function getBaseConf (params) {
       alias: config.alias
     },
     module: {
-      rules: [imageLoader, fontLoader, jsLoader, vueLoader, pugLoader]
+      rules: [imageLoader, fontLoader, tsLoader, jsLoader, vueLoader, pugLoader]
     },
     plugins: [
       new VueLoaderPlugin(),
