@@ -60,8 +60,8 @@ const pugLoader = {
 
 const tsLoader = {
   test: /\.tsx?$/,
-  loader: 'ts-loader',
   exclude: /node_modules/,
+  use: ['babel-loader', 'ts-loader'],
 }
 
 function getBaseConf (params) {
