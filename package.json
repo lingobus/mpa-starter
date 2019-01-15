@@ -10,7 +10,8 @@
     "clean": "rm -rf build src/pages src/mpa-common-library",
     "start": "cross-env HMR=true NODE_ENV=development WEBPACK=all node app.js",
     "release": "cross-env NODE_ENV=production node ./bin/build.js",
-    "analyzer": "webpack-bundle-analyzer ./build/prod/compilation-stats.json"
+    "analyzer": "webpack-bundle-analyzer ./build/prod/compilation-stats.json",
+    "test": "karma start"
   },
   "author": "zhangdaiyan <zhangdaiyan@gmail.com>",
   "license": "MIT",
@@ -66,7 +67,11 @@
     "webpack-dev-middleware": "3.4.0",
     "webpack-hot-middleware": "2.24.3",
     "webpack-merge": "4.1.4",
-    "write-file-webpack-plugin": "^4.5.0"
+    "write-file-webpack-plugin": "^4.5.0",
+    "karma": "^3.1.4",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^2.0.1",
+    "karma-webpack": "^3.0.5"
   },
   "dependencies": {
     "@babel/runtime": "7.1.5",
