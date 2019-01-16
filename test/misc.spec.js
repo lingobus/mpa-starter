@@ -1,4 +1,4 @@
-import { delay, waitFor, listToMap, sprintf } from "../src/mpa-common-library/utils/_misc.ts";
+import { delay, waitFor, listToMap, sprintf } from "mpa-common-library/utils/_misc.ts";
 
 describe('delay', function() {
   it('delay 1s', function(done) {

@@ -2,6 +2,7 @@
 // Generated on Wed Dec 12 2018 13:21:42 GMT+0800 (GMT+08:00)
 
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+const path = require('path')
 
 module.exports = function(config) {
   config.set({
@@ -40,6 +41,9 @@ module.exports = function(config) {
       mode: 'development',
       devtool: '#eval-source-map',
       resolve: {
+        alias: {
+          "mpa-common-library": path.resolve(__dirname, './src/mpa-common-library'),
+        }
       },
       module: {
         rules: [
