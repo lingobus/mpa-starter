@@ -3,6 +3,7 @@
 
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const path = require('path')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = function(config) {
   config.set({
@@ -18,6 +19,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      {pattern: 'src/common/lib/vue@2.5.7/vue.js', watched: false},
+      {pattern: 'src/common/lib/element-ui@2.4.8/element-ui.js', watched: false},
+      {pattern: 'src/common/lib/element-ui@2.4.8/theme-chalk.css', watched: false},
       {pattern: 'test/*.spec.js', watched: true},
       {pattern: 'test/*/*.spec.js', watched: true},
     ],
@@ -40,26 +44,70 @@ module.exports = function(config) {
       // webpack watches dependencies
       mode: 'development',
       devtool: '#eval-source-map',
+      externals: {
+        'vue': 'Vue',
+        'element-ui': 'Element',
+      },
       resolve: {
         alias: {
           "mpa-common-library": path.resolve(__dirname, './src/mpa-common-library'),
-        }
+        },
       },
       module: {
         rules: [
           {
             test: /\.tsx?$/,
-            exclude: /node_modules/,
             use: ['babel-loader', 'ts-loader'],
+            exclude: /node_modules/,
           },
           {
             test: /\.js$/,
             loader: 'babel-loader',
-            exclude: /node_modules/
+            exclude: /node_modules/,
+          },
+          {
+            test: /\.vue$/,
+            loader: 'vue-loader',
+            exclude: /node_modules/,
+          },
+          {
+            test: /\.pug$/,
+            oneOf: [
+              // this applies to <template lang="pug"> in Vue components
+              {
+                resourceQuery: /^\?vue/,
+                use: ['pug-plain-loader']
+              },
+              // this applies to pug template file
+              {
+                use: ['pug-loader']
+              },
+            ],
+            exclude: /node_modules/,
+          },
+          {
+            test: /\.css$/,
+            use: [
+              'vue-style-loader',
+              'css-loader',
+            ]
+          },
+          {
+            test: /\.styl(us)?$/,
+            use: [
+              'vue-style-loader',
+              'css-loader',
+              'stylus-loader',
+            ]
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+            loader: 'url-loader',
           }
         ]
       },
       plugins: [
+        new VueLoaderPlugin(),
         new FriendlyErrorsPlugin(),
       ],
       // webpack configuration
